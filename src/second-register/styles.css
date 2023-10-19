@@ -1,0 +1,82 @@
+.second-register-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto; 
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.second-register-container form {
+  width: 100%;
+}
+
+.second-register-container h1 {
+  margin: 2rem 0;
+  font-family: Poppins;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.second-register-container button {
+  width: 100%;
+  height: 4rem;
+  margin-top: 2.8rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary-glow);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.second-register-container button:hover {
+  opacity: 0.9;
+}
+
+.second-register-container .link {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.select-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-block label {
+  font-weight: 500;
+  font-size: 1rem
+}
+
+.select-block .select-days-of-week {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 0.8rem;
+  margin: 0.8rem 0;
+}
+
+.select-block .select-days-of-week .day {
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  background: var(--third-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.select-block .select-days-of-week .selected {
+  border: 1px solid var(--primary-green);
+  background: var(--green-black);
+}
+
+
