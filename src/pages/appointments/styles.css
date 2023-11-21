@@ -1,0 +1,36 @@
+.appointments-container .menu {
+  width: 16%;
+  padding: 1.6rem;
+  height: 100vh;
+  background-color: var(--third-background);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.appointments-container .user {
+  width: 100%;
+  height: 5.4rem;
+  border-radius: 1.6rem;
+  background-color: var(--primary-background);
+}
+
+.appointments-container .navbar {
+  list-style-type: none;
+  font-size: 1.2rem;
+  font-style: bold;
+}
+
+.appointments-container .navbar li {
+  cursor: pointer;
+}
+
+.appointments-container .navbar li + li {
+  margin-top: 0.8rem;
+}
+
+.appointments-container .navbar li.selected {
+  color: var(--primary-green)
+}
