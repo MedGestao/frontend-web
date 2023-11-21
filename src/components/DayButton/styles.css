@@ -1,0 +1,19 @@
+
+div.day {
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  background: var(--third-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+div.selected-day {
+  border: 1px solid var(--primary-green);
+  background: var(--green-black);
+}

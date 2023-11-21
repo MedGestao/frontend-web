@@ -1,12 +1,14 @@
 import './styles.css';
+import InputMask from "react-input-mask";
 
-const Input = ({ label, name, register, validationSchema, errors, ...rest }) => {
+const InputWithMask = ({ label, name, mask, register, validationSchema, errors, ...rest }) => {
   return (
     <div className="input-block">
       <label htmlFor={name}>{label}</label>
-      <input 
+      <InputMask  
         id={name} 
         name={name}
+        mask={mask}
         className={`${errors[name] && "invalid-input"}`} 
         {...register(name, validationSchema)}
         {...rest} />
@@ -17,5 +19,4 @@ const Input = ({ label, name, register, validationSchema, errors, ...rest }) => 
   );
 };
 
-
-export default Input;
+export default InputWithMask;
