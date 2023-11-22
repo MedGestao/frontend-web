@@ -3,7 +3,7 @@ import InputMask from "react-input-mask";
 
 const InputWithMask = ({ label, name, mask, register, validationSchema, errors, ...rest }) => {
   return (
-    <div className="input-block">
+    <div className="input-mask-block">
       <label htmlFor={name}>{label}</label>
       <InputMask  
         id={name} 

@@ -5,7 +5,9 @@ import LogoImage from "../../assets/logo.svg"
 const Header = () => {
   return (
     <header>
-      <img src={LogoImage} alt="MedGestão" />
+      <Link to="/">
+        <img src={LogoImage} alt="MedGestão" />
+      </Link>
     </header>
   );
 };

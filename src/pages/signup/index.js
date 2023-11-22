@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from 'react-router-dom'
 
 import Input from '../../components/Input';
 import './styles.css';
@@ -7,12 +8,15 @@ import Header from "../../components/Header";
 import Select from "../../components/Select";
 
 function Signup() {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  const navigate = useNavigate()
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm()
 
   const handleLogin = (data) => {
     console.log(data);
     /* localStorage.setItem("mykey","myvalue"); */
+    
     reset()
+    navigate("/signup-second-step")
   }
 
   return (
@@ -39,7 +43,7 @@ function Signup() {
               errors={errors}
               register={register}
               validationSchema={{ 
-                required: true,          
+                required: true,   
                 pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
               }}
             />
@@ -47,6 +51,7 @@ function Signup() {
             <Input
               name="password"
               label="Senha"
+              type="password"
               placeholder="********"
               errors={errors}
               register={register}
@@ -54,12 +59,19 @@ function Signup() {
             />
 
             <Input
-              name="verify-password"
+              name="verifyPassword"
               label="Confirmar senha"
+              type="password"
               placeholder="********"
               errors={errors}
               register={register}
-              validationSchema={{ required: true }}
+              validationSchema={{ 
+                required: true, 
+                validate: (value) => {
+                if (watch('password') !== value) {
+                  return "As senhas que você escreveu não correspondem";
+                }
+              }}}
             />
           </div>
           

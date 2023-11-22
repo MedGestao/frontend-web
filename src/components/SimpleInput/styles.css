@@ -1,18 +1,19 @@
 .simple-input-block {
   position: relative;
+  margin-top: 0.8rem;
 }
 
-.input-block + .simple-input-block {
+/* .input-block + .simple-input-block {
   margin-top: 1.4rem;
-}
+} */
 
-.simple-input-block + .input-block {
+/* .simple-input-block + .input-block {
   margin-top: 1.4rem;
 }
 
 .simple-input-block + .simple-input-block {
   margin-top: 1.4rem;
-}
+} */
 
 .simple-input-block label {
   font-size: 1rem;
