@@ -1,14 +1,15 @@
 .select-block {
   position: relative;
+  margin-top: 0.8rem;
 }
 
-.input-block + .select-block {
+/* .input-block + .select-block {
   margin-top: 1.4rem;
 }
 
 .select-block + .input-block {
   margin-top: 1.4rem;
-}
+} */
 
 .select-block label {
   font-size: 1rem;

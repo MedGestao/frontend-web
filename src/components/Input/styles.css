@@ -1,11 +1,12 @@
 .input-block {
   position: relative;
+  margin-top: 0.8rem;
 }
 
-.input-block + .input-block {
+/* .input-block + .input-block {
   margin-top: 1.4rem;
 }
-
+ */
 .input-block label {
   font-size: 1rem;
   font-style: normal;

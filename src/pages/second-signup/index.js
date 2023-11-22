@@ -29,8 +29,8 @@ function SecondSignup() {
   })
   const [selectedDays, setSelectedDays] = useState([])
   const [selectedPeriods, setSelectedPeriods] = useState([])
-  const { register, handleSubmit, reset, formState: { errors }, watch, setError } = useForm()
-  const watchZipCode = watch('cep', '')
+  const { register, handleSubmit, reset, clearErrors, formState: { errors }, watch, setError } = useForm()
+  const watchZipCode = watch('zipCode', '')
 
   useEffect(() => {
     if (watchZipCode.match(zipCodePattern))
@@ -39,7 +39,7 @@ function SecondSignup() {
 
   const handleLogin = (data) => {
     console.log(data)
-    getAddressByZipCode(data.cep)
+    getAddressByZipCode(data.zipCode)
     /* localStorage.setItem("mykey","myvalue") */
     reset()
     navigate("/dashboard")
@@ -50,9 +50,16 @@ function SecondSignup() {
       const cleanZipCode = zipCode.replace(/\D/g, '');
       ViaCepClient.get(`/${cleanZipCode}/json`).then((response) => {
         if (response.data.erro === true) {
-          setError('cep', { type: 'custom', message: 'CEP inválido' })
-          return
+          setAddress({
+            "cep": "",
+            "logradouro": "",
+            "bairro": "",
+            "uf": ""
+          })
+          setError('zipCode', { type: 'custom', message: 'CEP inválido' })
+          return 
         }
+        clearErrors('zipCode')
         setAddress(response.data);
       })
     }
@@ -113,7 +120,7 @@ function SecondSignup() {
               register={register}
               validationSchema={{ 
                 required: true, 
-                pattern: zipCodePattern  
+                pattern: zipCodePattern
               }}
             />
             <SimpleInput
