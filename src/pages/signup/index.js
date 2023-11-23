@@ -2,10 +2,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom'
 
 import Input from '../../components/Input';
-import './styles.css';
 import InputWithMask from '../../components/InputWithMask';
 import Header from "../../components/Header";
 import Select from "../../components/Select";
+import './styles.css';
+
+const PHONE_PATTERN = /^(\(\d{2}\) )\d{5}-\d{4}$/
 
 function Signup() {
   const navigate = useNavigate()
@@ -15,8 +17,8 @@ function Signup() {
     console.log(data);
     /* localStorage.setItem("mykey","myvalue"); */
     
-    reset()
-    navigate("/signup-second-step")
+    /* reset()
+    navigate("/signup-second-step") */
   }
 
   return (
@@ -25,7 +27,6 @@ function Signup() {
       <main className="register-container">
         <h1>Cadastro médico</h1>
         <form onSubmit={handleSubmit(handleLogin)}>
-
           <div className="first-column">
             <Input
               name="name"
@@ -46,6 +47,40 @@ function Signup() {
                 required: true,   
                 pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
               }}
+            />
+
+            <Input
+              name="crm"
+              label="CRM"
+              placeholder="13342"
+              errors={errors}
+              register={register}
+              validationSchema={{ required: true }}
+            />
+
+            <InputWithMask
+              name="cpf"
+              mask="999.999.999-99"
+              label="CPF"
+              placeholder="999.999.999-99"
+              errors={errors}
+              register={register}
+              validationSchema={{ 
+                required: true, 
+                pattern: /^\d{3}.\d{3}.\d{3}-\d{2}$/
+              }}
+            />
+          </div>
+          
+          <div className="second-column">
+            <Select
+              name="specialty"
+              label="Especialidade"
+              placeholder="Especialidade"
+              values={["Ginecologista", "Cardiologista"]}
+              errors={errors}
+              register={register}
+              validationSchema={{ required: "Selecione uma opção" }}
             />
 
             <Input
@@ -73,38 +108,17 @@ function Signup() {
                 }
               }}}
             />
-          </div>
-          
-          <div className="second-column">
-            <Input
-              name="crm"
-              label="CRM"
-              placeholder="13342"
-              errors={errors}
-              register={register}
-              validationSchema={{ required: true }}
-            />
-
-            <Select
-              name="specialty"
-              label="Especialidade"
-              placeholder="Especialidade"
-              values={["Ginecologista", "Cardiologista"]}
-              errors={errors}
-              register={register}
-              validationSchema={{ required: "Selecione uma opção" }}
-            />
 
             <InputWithMask
               name="phone"
               mask="(99) 99999-9999"
               label="Telefone"
-              placeholder="Telefone"
+              placeholder="(99) 99999-9999"
               errors={errors}
               register={register}
               validationSchema={{ 
                 required: true, 
-                pattern: /^(\(\d{2}\) )\d{5}-\d{4}$/ 
+                pattern: PHONE_PATTERN
               }}
             />
 

@@ -16,7 +16,6 @@
 .second-register-container .group-inputs {
   display: flex;
   flex-direction: column;
-  margin-top: 1.4rem;
 }
 
 
@@ -57,17 +56,16 @@
   font-weight: 600;
 }
 
-.select-block {
+.signup-select-block {
   display: flex;
   flex-direction: column;
 }
 
-.select-block label {
-  font-weight: 500;
-  font-size: 1rem
+.signup-select-block.upload {
+  align-items: center;
 }
 
-.select-block .select-days-of-week {
+.signup-select-block .select-days-of-week {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-column-gap: 0.8rem;
@@ -96,6 +94,72 @@
   border-radius: 8px;
 }
 
+#input-file {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#input-file .avatar-image {
+  background-size: cover;
+  background-position: center;
+  width: 14rem;
+  height: 14rem;
+  outline: 3px dashed var(--primary-green);
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#input-file input {
+  width: 0.1px;
+  visibility: hidden;
+  z-index: -1;
+}
+
+#input-file span {
+  border-radius: var(--border-radius);
+/*   width: 100%;
+  background-color: rgba(27, 200, 158, 0.5);
+  color: var(--secondary-background);
+  padding: 1rem;
+  font-weight: 600; */
+  width: 100%;
+  font-weight: 700;
+  padding: 0.8rem;
+  /* border-radius: 0.8rem; */
+  cursor: pointer;
+  /* color: var(--text-primary); */
+  color: var(--secondary-background);
+  background-color: var(--primary-green);
+}
+
+.address-details {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-background);
+  margin: 1.6rem 0;
+  padding: 1.4rem;
+  border-radius: 8px;
+}
+
+.end-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+/* 
+.schedules-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+} */
+
 @media (max-width: 800px) {
   .second-register-container h1 {
     font-size: 1.6rem;
@@ -106,7 +170,7 @@
     grid-column-gap: 4rem;
   }
 
-  .select-block .select-days-of-week {
+  .signup-select-block .select-days-of-week {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
