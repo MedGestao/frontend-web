@@ -1,0 +1,53 @@
+.drawer {
+  background: #16161b;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 224px;
+  height: 610px;
+}
+@media (max-width: 1920px) {
+  /* A partir de 768px de largura de tela, faça ajustes de estilo */
+  .drawer {
+    height: 630px;
+  }
+}
+
+.options {
+  height: ;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.op {
+  color: #98a2ac;
+}
+.op2 {
+  color: #98a2ac;
+}
+
+.op:hover {
+  color: #1be29a;
+  cursor: pointer;
+}
+
+.op2:hover {
+  color: #1be29a;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .options {
+    height: 70%; /* Adjust as needed for smaller screens */
+    margin-top: 40%; /* Adjust as needed */
+    margin-bottom: 40%; /* Adjust as needed */
+  }
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
