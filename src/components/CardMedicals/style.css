@@ -1,0 +1,165 @@
+.cardMed {
+  width: 680px;
+  height: 215px;
+  border-radius: 20px;
+  background: #202125;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.posi {
+  display: flex;
+  justify-content: center;
+  margin-left: 40px;
+  flex-direction: column;
+}
+.description {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #a1a0a4;
+}
+
+.titleCardMed {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 50;
+  line-height: 1px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.titleCardMedBold {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.subtitle {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.container {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  margin-right: 20px; /* Ajuste o espaçamento entre as colunas conforme necessário */
+}
+
+.titleCardMedBold {
+  font-weight: bold;
+}
+.logoMedic {
+  width: 400px;
+}
+
+@media (max-width: 1920px) {
+  .cardMed {
+    margin-top: 20px;
+    width: 660px;
+    height: 250px;
+    margin-left: 30px;
+  }
+
+  .description {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #a1a0a4;
+  }
+  .titleCardMed {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 50;
+    line-height: 1px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .titleCardMedBold {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .logoMedic {
+    width: 400px;
+  }
+}
+@media (max-width: 1340px) {
+  .cardMed {
+    width: 500px;
+    height: 200px;
+  }
+
+  .description {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #a1a0a4;
+  }
+  .titleCardMed {
+    font-family: Poppins;
+    font-size: 13px;
+    font-weight: 50;
+    line-height: 1px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .titleCardMedBold {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .logoMedic {
+    width: 330px;
+  }
+}
+@media (max-width: 1163px) {
+  .cardMed {
+    width: 450px;
+    height: 180px;
+  }
+  .posi {
+    font-size: 10px;
+  }
+  .description {
+    font-family: Poppins;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #a1a0a4;
+  }
+  .titleCardMed {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 50;
+    line-height: 1px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .titleCardMedBold {
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .logoMedic {
+    width: 250px;
+  }
+}

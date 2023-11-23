@@ -65,7 +65,7 @@ function Register() {
               />
             </div>
           </div>
-          
+
           <div className="second-column">
             <Input
               name="CRM"

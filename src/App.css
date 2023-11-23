@@ -1,21 +1,21 @@
 :root {
   --max-width: 1100px;
   --border-radius: 16px;
-  --font: 'Poppins', monospace;
+  --font: "Poppins", monospace;
 
-  --primary-glow: linear-gradient(90deg, #19735D 0%, #159C7C 100%);
-  --tile: #DDD9E5;
-  --text-primary: #FBFBFB;
-  --text: #A1A0A4; 
+  --primary-glow: linear-gradient(90deg, #19735d 0%, #159c7c 100%);
+  --tile: #ddd9e5;
+  --text-primary: #fbfbfb;
+  --text: #a1a0a4;
 
-  --primary-green: #1BE29A;
-  --primary-background: #16161B;
+  --primary-green: #1be29a;
+  --primary-background: #16161b;
   --secondary-background: rgba(22, 22, 27, 1);
   --third-background: #202125;
 
-  --orange: #EB996E;
+  --orange: #eb996e;
   --border: #313132;
-  --green-black: #074E34;
+  --green-black: #074e34;
 }
 
 * {
@@ -41,7 +41,10 @@ a {
   text-decoration: none;
 }
 
-
-h1, h2, label, input, p {
+h1,
+h2,
+label,
+input,
+p {
   font-family: var(--font);
 }

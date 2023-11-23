@@ -1,0 +1,211 @@
+.Dashboard {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #101015;
+  width: 100%;
+  height: 100%;
+}
+
+.schedule {
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.agendConsult {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.te {
+  /* eva:arrow-ios-forward-fill */
+
+  position: absolute;
+  width: 24.24px;
+  height: 24px;
+  left: 928.12px;
+  top: 327px;
+
+  transform: rotate(90deg);
+
+  /* Vector */
+
+  position: absolute;
+  left: 78.5%;
+  right: -7.91%;
+  top: 37.87%;
+  bottom: 3.67%;
+
+  /* labels */
+  background: #a1a0a4;
+  transform: rotate(90deg);
+}
+.ts {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.calendar {
+  width: 170px;
+  height: 66px;
+  background: #202125;
+  border: 1px solid #2e2f34;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #98a2ac;
+}
+
+.react-calendar {
+  width: 310px !important;
+  max-width: 100%;
+  background-color: #202125 !important;
+  color: #b3b3b3 !important;
+  border-radius: 8px;
+  border: none !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  margin-bottom: 10px;
+}
+.react-calendar__navigation button {
+  color: #b3b3b3 !important;
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #202125 !important;
+}
+.react-calendar__navigation button[disabled] {
+  background-color: #b3b3b3 !important;
+}
+abbr[title] {
+  text-decoration: none;
+}
+.react-calendar__month-view__days__day--weekend {
+  color: white !important;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #757575 !important;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #1be29a !important;
+  color: #fff !important;
+  border-radius: 50px;
+}
+.react-calendar__tile--now {
+  background: #074e34 !important;
+  border-radius: 50px;
+  font-weight: bold;
+  color: #fff !important;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #1be29a !important;
+  border-radius: 30px;
+  font-weight: bold;
+  color: #fff !important;
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #f8f8fa;
+}
+.react-calendar__tile--active {
+  background: #1be29a;
+  border-radius: 36px;
+  font-weight: bold;
+  color: white;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #1be29a !important;
+  color: white;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #1be29a !important;
+}
+.react-calendar__tile--range {
+  background: #1be29a !important;
+  color: #6f48eb;
+  border-radius: 36px !important;
+}
+.react-calendar__tile--rangeStart {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background: #b3b3b3;
+  color: white;
+}
+.react-calendar__tile--rangeEnd {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #b3b3b3;
+  color: red;
+}
+.react-calendar__tile {
+  color: white;
+}
+/* Esconder a barra de rolagem */
+::-webkit-scrollbar {
+  width: 0.2em;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+  /* Cor de fundo da área de rolagem */
+  border-radius: 8px; /* Raio da borda para arredondar as extremidades */
+}
+
+@media (max-width: 1920px) {
+  .Dashboard {
+    width: 100%;
+    height: 100%;
+  }
+  .calendar {
+    width: 160px;
+    height: 60px;
+    margin-right: 10px;
+  }
+}
+@media (max-width: 1340px) {
+  .Dashboard {
+    width: 100%;
+    height: 100%;
+  }
+}
+@media (max-width: 1163px) {
+  .Dashboard {
+    width: 100%;
+    height: 100%;
+  }
+}

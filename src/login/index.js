@@ -12,8 +12,8 @@ function Login() {
   return (
     <>
       <header>
-          <img src={LogoImage} alt="MedGestão" />
-        </header>
+        <img src={LogoImage} alt="MedGestão" />
+      </header>
       <main className="login-container">
         <section className="form">
           <form>
@@ -36,7 +36,7 @@ function Login() {
             />
 
             <button type="submit">Entrar</button>
-        
+
           </form>
 
           <Link className="link" to="/register">

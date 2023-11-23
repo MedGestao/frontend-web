@@ -9,30 +9,30 @@ const daysOfWeek = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]
 function SecondRegister() {
   const [price, setPrice] = useState('')
   const [selectedDay, setSelectedDay] = useState('monday')
-/*   const [selectedDays, setSelectedDays] = useState([
-    {
-      "day": "",
-      "periods": []
-    }
-  ]) */
-
-/*   const isDaySelected = (day) => {
-    return selectedDays.forEach(sDay => {
-      if (sDay === day) {
-        return sDay.periods.length !== 0
+  /*   const [selectedDays, setSelectedDays] = useState([
+      {
+        "day": "",
+        "periods": []
       }
-    })
-  } */
+    ]) */
 
-/*   const handleSelectedDays = (day, time) => {
-    setSelectedDays(previous => {
-      previous.map(p => {
-        if (p.day == day) {
-          p.periods.push(time)
+  /*   const isDaySelected = (day) => {
+      return selectedDays.forEach(sDay => {
+        if (sDay === day) {
+          return sDay.periods.length !== 0
         }
       })
-    })
-  } */
+    } */
+
+  /*   const handleSelectedDays = (day, time) => {
+      setSelectedDays(previous => {
+        previous.map(p => {
+          if (p.day == day) {
+            p.periods.push(time)
+          }
+        })
+      })
+    } */
 
   return (
     <>
@@ -46,17 +46,17 @@ function SecondRegister() {
             <label htmlFor="">Dias de atendimento</label>
             <div className="select-days-of-week">
               {daysOfWeek.map((day) => (
-                <div 
-                  key={day} 
+                <div
+                  key={day}
                   className={`day ${(selectedDay === day) && "selected"}`}
                   onClick={() => setSelectedDay(day)}
-                > 
+                >
                   {day}
                 </div>
               ))}
             </div>
           </div>
-          
+
           <Input
             name="Valor"
             label="Valor da consulta"
