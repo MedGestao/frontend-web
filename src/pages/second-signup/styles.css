@@ -140,25 +140,14 @@
   background-color: var(--primary-green);
 }
 
-.address-details {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--card-background);
-  margin: 1.6rem 0;
-  padding: 1.4rem;
-  border-radius: 8px;
+.upload-error {
+  display: none;
 }
 
-.end-step {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+.active {
+  display: block;
+  color: var(--orange);
 }
-/* 
-.schedules-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-} */
 
 @media (max-width: 800px) {
   .second-register-container h1 {
@@ -168,6 +157,10 @@
   .second-register-container form {
     grid-template-columns: 1fr;
     grid-column-gap: 4rem;
+  }
+
+  #upload {
+    grid-row: 1;
   }
 
   .signup-select-block .select-days-of-week {

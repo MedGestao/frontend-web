@@ -56,6 +56,21 @@
   margin: 0 0 0 1rem;
 }
 
+.address-details {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-background);
+  margin: 1.6rem 0;
+  padding: 1.4rem;
+  border-radius: 8px;
+}
+
+.group-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+
 @media (max-width: 600px) {
   .register-container form {
     grid-template-columns: 1fr;

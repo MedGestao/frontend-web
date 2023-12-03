@@ -1,9 +1,9 @@
 import { useMemo, useState, useEffect, useCallback } from "react"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from "axios"
 
-import { ViaCepClient } from '../../service/client'
+import { BackendClient } from '../../service/client'
 import Input from '../../components/Input'
 import SimpleInput from '../../components/SimpleInput'
 import InputWithMask from '../../components/InputWithMask'
@@ -17,12 +17,14 @@ const PERIODS = ["09:00 - 12:00", "14:00 - 18:00"]
 /* const DEFAULT_AVATAR_IMG = "https://images.ctfassets.net/h8qzhh7m9m8u/5459snTalzWRmionEbuZYo/d50b7e5b7f65f70bb37e127c7e73b79e/Doctors_green.png"
  */
 /* const DEFAULT_AVATAR_IMG = "https://img.freepik.com/free-psd/3d-healthcare-icon-with-medic_23-2150819694.jpg"
- */const DEFAULT_AVATAR_IMG = "https://t3.ftcdn.net/jpg/05/18/09/86/360_F_518098617_0PFa7dDxTysifBhhTGM3ccCbrLv43sNz.jpg"
+ */
+const DEFAULT_AVATAR_IMG = "https://t3.ftcdn.net/jpg/05/18/09/86/360_F_518098617_0PFa7dDxTysifBhhTGM3ccCbrLv43sNz.jpg"
 const ZIP_CODE_PATTERN = /^\d{5}-\d{3}$/
 
 function SecondSignup() {
   const navigate = useNavigate()
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState('');
+  const [isAvatarEmpty, setIsAvatarEmpty] = useState(false);
   const [address, setAddress] = useState({
     "cep": "",
     "logradouro": "",
@@ -32,23 +34,47 @@ function SecondSignup() {
   const [selectedDays, setSelectedDays] = useState([])
   const [selectedPeriods, setSelectedPeriods] = useState([])
   const { register, handleSubmit, reset, clearErrors, formState: { errors }, watch, setError } = useForm()
-  const watchZipCode = watch('zipCode', '')
+  const { state } = useLocation();
 
-  useEffect(() => {
-    if (watchZipCode.match(ZIP_CODE_PATTERN))
-      getAddressByZipCode(watchZipCode)
-  }, [watchZipCode]);
+  const handleSignup = async (data) => {
+    console.log(state)
 
-  const handleLogin = (data) => {
     console.log(data)
-    /* getAddressByZipCode(data.zipCode) */
-/*     const filteredPeriods = 
- */
-    const filteredPeriods = getOnlyValidPeriods()
 
+    const filteredPeriods = getOnlyValidPeriods()
+    console.log(filteredPeriods)
+
+    const doctorRequest = {
+      "user": {
+        "name": "Samara",
+        "birthDate": "2000-04-12T00:00:00Z",
+        "cpf": "13968049438",
+        "sex": "F",
+        "address": "rua A",
+        "email": "test2@gmail.com",
+        "password": "12344",
+        "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg*",
+        "cellphoneUser": {
+          "number": "829299292"
+        }
+      },
+      "crm": "123",
+      "specialty": {
+        "description": "Ginecologista"
+      }
+    }
+  
+    /* try {
+      var response = await BackendClient.post('/api/doctors', doctorRequest)
+      console.log(response.status)
+      console.log(response.data.message)
+    } catch (exception) {
+      console.log(exception.response.data.message)
+    } */
+    
     /* localStorage.setItem("mykey","myvalue") */
-    /* reset()
-    navigate("/dashboard") */
+    /* reset() */
+    navigate("/dashboard")
   }
 
   const getOnlyValidPeriods = () => {
@@ -66,31 +92,12 @@ function SecondSignup() {
   const handleUploadAvatar = useCallback(
     (event) => {
       if (event.target.files) {
+        console.log(event.target.files[0])
         setAvatar(event.target.files[0]);
       }
     },
     [],
   );
-
-  const getAddressByZipCode = (zipCode) => {
-    if (zipCode !== null) {
-      const cleanZipCode = zipCode.replace(/\D/g, '');
-      ViaCepClient.get(`/${cleanZipCode}/json`).then((response) => {
-        if (response.data.erro === true) {
-          setAddress({
-            "cep": "",
-            "logradouro": "",
-            "bairro": "",
-            "uf": ""
-          })
-          setError('zipCode', { type: 'custom', message: 'CEP inválido' })
-          return 
-        }
-        clearErrors('zipCode')
-        setAddress(response.data);
-      })
-    }
-  }
 
   const handleSelectedDays = (day) => {
     // Se dia já estiver selecionado, remove
@@ -112,11 +119,6 @@ function SecondSignup() {
     return selectedPeriods[day]?.length > 0 && selectedPeriods[day].indexOf(period) > -1
   } 
 
-  const removeDayOfSelectedPeriods = (day) => {
-    return Object.fromEntries(
-      Object.entries(selectedPeriods).filter(([key]) => key !== day)
-    );
-  }
 
   const handleSelectedPeriods = (day, period) => {
     if (selectedPeriods[day]) {
@@ -141,86 +143,7 @@ function SecondSignup() {
       <Header />
       <main className="second-register-container">
         <h1>Cadastro médico</h1>
-        <form onSubmit={handleSubmit(handleLogin)}>
-          <div className="group-inputs">
-            <h3>Seu endereço</h3>
-            <InputWithMask
-              name="zipCode"
-              label="CEP"
-              mask="99999-999"
-              placeholder="57304-467"
-              errors={errors}
-              register={register}
-              validationSchema={{ 
-                required: true, 
-                pattern: ZIP_CODE_PATTERN
-              }}
-            />
-            {/* <SimpleInput
-              name="street"
-              label="Rua"
-              value={address.logradouro}
-              placeholder="Rua"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="neighborhood"
-              label="Bairro"
-              value={address.bairro}
-              placeholder="Bairro"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="city"
-              label="Cidade"
-              placeholder="Cidade"
-              value={address.localidade}
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="state"
-              label="Estado"
-              placeholder="Estado"
-              readOnly="readonly"
-              value={address.uf}
-            /> */}
-            <Input
-              name="number"
-              label="Número"
-              placeholder="467"
-              errors={errors}
-              register={register}
-              validationSchema={{ required: true }}
-            />
-            <div className="address-details">
-              
-              </div>
-          </div>
-
-          <div className="signup-select-block upload">
-              <h3>Sua melhor foto</h3>
-              <div id="input-file">
-                {/* <span
-                  className="avatar-image"
-                  style={{ backgroundImage: `url(${preview})` }}
-                /> */}
-                <input
-                  id="file"
-                  name="avatar"
-                  placeholder="Adicionar avatar"
-                  type="file"
-                  accept=".png, .jpeg, .jpg"
-                  onChange={handleUploadAvatar}
-                />
-                <label 
-                  className="avatar-image upload-label" 
-                  htmlFor="file" 
-                  style={{ backgroundImage: `url(${preview})` }}>
-                    <span>Selecionar foto</span>
-                </label>
-              </div>
-            </div>
-
+        <form onSubmit={handleSubmit(handleSignup)}>
           <aside className="schedules-box">
             <div className="signup-select-block">
               <h3>Selecione seus dias de atendimento</h3>
@@ -236,21 +159,6 @@ function SecondSignup() {
               </div>
             </div>
 
-            <div>
-              <Input
-                name="price"
-                label="Valor da consulta"
-                placeholder="R$ 200"
-                errors={errors}
-                register={register}
-                validationSchema={{ required: true }}
-              />
-
-            </div>
-            
-          </aside>
-
-          <div className="end-step"> 
             {selectedDays.length > 0 && <div className="periods">
                 <h3>Selecione os horários para cada dia</h3>
                 
@@ -271,8 +179,39 @@ function SecondSignup() {
                   </div>
                 ))}
             </div>}
+
+            <Input
+              name="price"
+              label="Valor da consulta"
+              placeholder="R$ 200"
+              errors={errors}
+              register={register}
+              validationSchema={{ required: true }}
+            />
+
             <button className="btn-submit" type="submit">Finalizar cadastro</button>
-          </div>   
+
+          </aside>
+          <div id="upload" className="signup-select-block upload">
+            <h3>Sua melhor foto</h3>
+            <div id="input-file">
+              <input
+                id="file"
+                name="avatar"
+                placeholder="Adicionar avatar"
+                type="file"
+                accept=".png, .jpeg, .jpg"
+                onChange={handleUploadAvatar}
+              />
+              <label 
+                className="avatar-image upload-label" 
+                htmlFor="file" 
+                style={{ backgroundImage: `url(${preview})` }}>
+                  <span>Selecionar foto</span>
+              </label>
+            </div>
+            <span className={`upload-error ${isAvatarEmpty ? 'active' : ''}`}>Oops! Você esqueceu de adicionar sua foto!</span>
+          </div>
         </form>
       </main>
     </>
