@@ -4,7 +4,6 @@ import LogoImage from "./logo.svg";
 function Card() {
     return (
         <div className="card">
-
             <img className="img" src={LogoImage} alt="MedGestão" />
             <div className="titles">
                 <span className="nameMedic">Joana Maria</span>

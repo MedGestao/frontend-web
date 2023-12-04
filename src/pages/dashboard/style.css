@@ -1,12 +1,29 @@
 .Dashboard {
-  justify-content: center;
-  align-items: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-column-gap: 1.6rem;
+  /* justify-content: center;
+  align-items: center;*/
+/*   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;  */
   background: #101015;
   width: 100%;
   height: 100%;
+}
+
+.agendConsult {
+  padding: 0 0.8rem;
+}
+
+.dash-cards {
+  margin-top: 1.6rem;
+/*   overflow-y: auto;
+  overflow-x: hidden; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
 }
 
 .headerHistoryColumn {
@@ -53,11 +70,16 @@
 }
 
 .schedule {
-  height: 640px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  margin-left: 280px;
+  padding: 1.6rem;
 }
+
 .agendConsult {
   justify-content: center;
   align-items: center;
@@ -239,25 +261,42 @@ abbr[title] {
 }
 
 @media (max-width: 1920px) {
-  .Dashboard {
-    width: 100%;
-    height: 100%;
-  }
   .calendar {
     width: 180px;
     height: 60px;
     margin-right: 10px;
   }
 }
-@media (max-width: 1340px) {
+
+@media (max-width: 900px) {
   .Dashboard {
-    width: 100%;
-    height: 100%;
+    grid-template-columns: 1fr;
   }
-}
-@media (max-width: 1163px) {
-  .Dashboard {
-    width: 100%;
-    height: 100%;
+
+  .dash-cards {
+    grid-template-columns: 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+  }
+
+  .schedule {
+    max-width: 500px;
+    margin-left: 0;
+    padding: 1.6rem;
+    margin-top: 8rem;
+  }
+
+  .calendar {
+    width: 200px;
+    height: 60px;
+    margin-right: 0;
+  }
+
+  .agendConsult {
+    padding: 0;
+  }
+  .title {
+    font-size: 1.2rem;
+    line-height: 24px;
   }
 }

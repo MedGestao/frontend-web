@@ -4,20 +4,17 @@ import './style.css';
 
 const PatientsConsult = (props) => {
   return (
-
     <div className="patientsConsultsCard" >
-      <div >
+      <div className="patientsConsultsCardText">
         <img className="patientImg" src={LogoImage} />
-      </div>
-      <div>
-        <span>{props.consult.name}</span>
-        <br />
-        <span className="titleAnotation">Anotações</span>
-      </div>
-      <div>
-        <img src={arrow} />
 
+        <div>
+          <span>{props.consult.name}</span>
+          <br />
+          <span className="titleAnotation">Anotações</span>
+        </div>
       </div>
+      <img src={arrow} />
     </div>
   );
 

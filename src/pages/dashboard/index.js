@@ -3,18 +3,29 @@ import CardMedicals from "../../components/CardMedicals";
 import CardSevice from "../../components/CardService";
 import LatestConsultations from "../../components/latestConsultations";
 import './style.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import calendarIcon from "./calendar.svg"
 import arrowIcon from "./arrow.svg"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 function Dashboard() {
-  const dados = [4, 3]
+  const appointment = { 
+    name: 'José silva', 
+    birthDate: '11/12/23', 
+    age: 40, 
+    appointmentDate: '11/12/23', 
+    appointmentTime: '12:43' 
+  }
+  const [data, setData] = useState([]);
   const [date, setDate] = useState(new Date());
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [history, setHistory] = useState(false);
   const name = useState()
+
+  useEffect(() => {
+    setData([appointment, appointment, appointment, appointment])
+  }, [])
 
   const searchPatients = (name) => {
     console.log('opa', name);
@@ -41,9 +52,9 @@ function Dashboard() {
 
   return (
     <div className="Dashboard">
-      <Drawer active={handleTruehistory} desactive={handleFalsehistory} />
+      <Drawer isActive={history} active={handleTruehistory} desactive={handleFalsehistory} />
 
-      <div className="schedule" style={{ maxHeight: 'calc(100vh )', overflowY: 'auto' }}>
+      <div className="schedule">
         {history ?
           <div className="headerHistoryColumn">
             <div className="headerHistory">
@@ -70,16 +81,18 @@ function Dashboard() {
 
               />
             </div>
-
+            <div className="dash-cards">
+              {data.map((item, index) => (
+                <CardSevice key={index} appointment={item} />
+              ))}
+            </div>
           </div>
 
-          : <div>
-
-
+          : ( 
+          <div>
             <CardMedicals className="cardDoctor" />
-
             <div className="agendConsult" >
-              <div>Agenda</div>
+              <div className="title">Consultas Agendadas</div>
               <div className="ts" onMouseOver={showCalendar} onMouseOut={hideCalendar}>
                 <div className="calendar" >
                   <div style={{ display: 'flex' }}>
@@ -93,34 +106,17 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-          </div>
-        }
 
-
-        <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row', position: 'relative', zIndex: 1
-          }} >
-            {dados.map((item, index) => (
-              <CardSevice key={index} dados={item} />
-            ))}
+            <div className="dash-cards">
+              {data.map((item, index) => (
+                <CardSevice key={index} appointment={item} />
+              ))}
+            </div>
           </div>
-          <div style={{
-            marginTop: '10px',
-            display: 'flex',
-            flexDirection: 'row', position: 'relative', zIndex: 1
-          }} >
-            {dados.map((item, index) => (
-              <CardSevice key={index} dados={item} />
-            ))}
-          </div>
-        </div>
+        )}        
       </div >
 
       <LatestConsultations />
-
-
     </div >
   );
 }
