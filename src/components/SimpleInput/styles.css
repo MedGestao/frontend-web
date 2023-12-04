@@ -3,34 +3,21 @@
   margin-top: 0.8rem;
 }
 
-/* .input-block + .simple-input-block {
-  margin-top: 1.4rem;
-} */
-
-/* .simple-input-block + .input-block {
-  margin-top: 1.4rem;
-}
-
-.simple-input-block + .simple-input-block {
-  margin-top: 1.4rem;
-} */
-
 .simple-input-block label {
   font-size: 1rem;
-  font-style: normal;
+  
   font-weight: 500;
 }
 
 .simple-input-block input {
   width: 100%;
-  height: 4rem;
   margin-top: 0.8rem;
   border-radius: 0.8rem;
   background: var(--third-background);
   color: var(--text-primary);
   border: 1px solid var(--border);
   outline: 0;
-  padding: 0 1.6rem;
+  padding: 1.4rem;
 }
 
 .simple-input-block input::placeholder {

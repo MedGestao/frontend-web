@@ -7,4 +7,11 @@ const ViaCepClient = axios.create({
   }
 })
 
-export { ViaCepClient }
+const BackendClient = axios.create({
+  baseURL: 'http://localhost:3001',
+  headers: {
+    'content-type': 'application/json;charset=utf-8',
+  }
+})
+
+export { ViaCepClient, BackendClient }

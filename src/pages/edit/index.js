@@ -13,7 +13,7 @@ import './styles.css';
 const PHONE_PATTERN = /^(\(\d{2}\) )\d{5}-\d{4}$/
 const ZIP_CODE_PATTERN = /^\d{5}-\d{3}$/
 
-function Signup() {
+function Edit() {
   const navigate = useNavigate()
   const [address, setAddress] = useState({
     "cep": "",
@@ -49,7 +49,7 @@ function Signup() {
     }
   }
 
-  const handleSignup = (data) => {
+  const handleEdit = (data) => {
     console.log(data);
     /* localStorage.setItem("mykey","myvalue"); */
     
@@ -63,7 +63,7 @@ function Signup() {
       <Header />
       <main className="register-container">
         <h1>Cadastro médico</h1>
-        <form onSubmit={handleSubmit(handleSignup)}>
+        <form onSubmit={handleSubmit(handleEdit)}>
           <div className="first-column">
             <Input
               name="name"
@@ -111,34 +111,7 @@ function Signup() {
                 pattern: ZIP_CODE_PATTERN
               }}
             />
-            {/* <SimpleInput
-              name="street"
-              label="Rua"
-              value={address.logradouro}
-              placeholder="Rua"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="neighborhood"
-              label="Bairro"
-              value={address.bairro}
-              placeholder="Bairro"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="city"
-              label="Cidade"
-              placeholder="Cidade"
-              value={address.localidade}
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="state"
-              label="Estado"
-              placeholder="Estado"
-              readOnly="readonly"
-              value={address.uf}
-            /> */}
+            
             {address.logradouro !== '' && <div className="address-details">
               <p>{address.logradouro} - {address.bairro} - {address.localidade}/{address.uf} </p>
             </div>}
@@ -222,4 +195,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Edit;

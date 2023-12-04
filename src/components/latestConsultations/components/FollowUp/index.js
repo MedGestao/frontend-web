@@ -18,17 +18,13 @@ const FollowUp = (props) => {
   return (
 
     <div className="followUp" >
-      <div>
-        {props.type != 'consult' ? <img className="" src={LogoImage} alt='icon' /> : <img className="" src={listIcon} alt='icon' />}
+      <div className="followUpBox">
+        <div>
+          {props.type != 'consult' ? <img className="" src={LogoImage} alt='icon' /> : <img className="" src={listIcon} alt='icon' />}
+        </div>
+        <span style={{ color: cor, fontSize: size }} >{props.title}</span>
       </div>
-      <div> <span style={{ color: cor, fontSize: size }} >{props.title}</span>
-
-      </div>
-      <div>
-        <span className="valueCard"> 10</span>
-
-      </div>
-
+      <span className="valueCard">10</span>
     </div>
   );
 

@@ -3,10 +3,10 @@
   --border-radius: 16px;
   --font: "Poppins", monospace;
 
-  --primary-glow: linear-gradient(90deg, #19735d 0%, #159c7c 100%);
-  --tile: #ddd9e5;
-  --text-primary: #fbfbfb;
-  --text: #a1a0a4;
+  --primary-glow: linear-gradient(90deg, #19735D 0%, #159C7C 100%);
+  --title: #DDD9E5;
+  --text-primary: #FBFBFB;
+  --text: #A1A0A4; 
 
   --primary-green: #1be29a;
   --primary-background: #16161b;
