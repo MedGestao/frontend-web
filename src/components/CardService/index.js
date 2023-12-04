@@ -4,7 +4,8 @@ import timeIcon from "./timeIcon.svg"
 import calendarIcon from "./calendarIcon.svg"
 import arrow from './arrow.svg'
 
-function CardSevice() {
+function CardSevice(props) {
+
     return (
         <div className="cardService">
             <div className="cadServiceMed1">
@@ -13,21 +14,21 @@ function CardSevice() {
                 </div>
                 <div style={{ marginRight: '45px' }}>
                     <div className='patientInformation' >
-                        <span>José silva</span>
+                        <span>{props.name}</span>
                     </div>
                     <div className='dateInformation'>
-                        <span>11/12/23 - 40 anos</span>
+                        <span>{props.date_of_birth} - {props.age} anos</span>
                     </div>
                 </div>
             </div>
             <div className="cadServiceMed2">
                 <div className="agend">
                     <div className='dateInformation'>
-                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>11/12/23</span>
+                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>{props.date_of_consult}</span>
 
                     </div>
                     <div className="dateInformation">
-                        <img src={timeIcon} style={{ marginRight: '10px' }} /> <span>12:43</span>
+                        <img src={timeIcon} style={{ marginRight: '10px' }} /> <span>{props.consultation_time}</span>
 
                     </div>
                 </div>

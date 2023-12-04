@@ -21,35 +21,55 @@
   justify-content: space-between;
 }
 
-.simple-input-block {
+.inputStyle {
   position: relative;
   margin-top: 0.8rem;
 }
 
-.simple-input-block label {
+.inputStyle {
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
 }
 
-.simple-input-block input {
-  background-image: url("./calendar.svg");
+.inputStyle {
   background-size: 20px;
   background-position: 10px center;
   background-repeat: no-repeat;
   width: 100%;
-  height: 4rem;
+  height: 3rem;
   margin-top: 0.8rem;
   border-radius: 0.8rem;
   background: var(--third-background);
   color: var(--text-primary);
   border: 1px solid var(--border);
   outline: 0;
-  padding: 0 1.6rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.inputStyle input {
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 2rem;
+  border-radius: 0.8rem;
+  background: var(--third-background);
+  color: var(--text-primary);
+  border: 0px solid var(--border);
+  outline: 0;
 }
 
-.simple-input-block input::placeholder {
+.inputStyle input::placeholder {
   color: var(--text);
+}
+.buttonSearch {
+  background-color: var(--thid-background);
+  border: 0px solid var(--border);
+  outline: 0;
+  padding: 0 1.6rem;
+  cursor: pointer;
 }
 
 .schedule {

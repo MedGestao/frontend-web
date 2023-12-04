@@ -6,27 +6,42 @@ import './style.css';
 import React, { useState } from 'react';
 import calendarIcon from "./calendar.svg"
 import arrowIcon from "./arrow.svg"
+import searcIcon from "./searchIcon.svg"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 function Dashboard() {
-  const dados = [4, 3]
   const [date, setDate] = useState(new Date());
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [history, setHistory] = useState(false);
-  const name = useState()
-
-  const searchPatients = (name) => {
+  const [name, setName] = useState('');
+  const [consultCard, setConsultCard] = useState([{ name: "marcos", age: "25", date_of_birth: "00/00/0000", date_of_consult: "12/12/2024", consultation_time: "11:00" },
+  { name: "Maria", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
+  { name: "marta", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
+  { name: "joana", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
+  { name: "Carlos", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
+  { name: "Kevin", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" }
+  ])
+  var [filteredConsultations, setFilteredConsultation] = useState(consultCard)
+  const searchPatients = () => {
     console.log('opa', name);
+    filteredConsultations = consultCard.filter(paciente => {
+
+      if (paciente.name.toLowerCase() == name.toLowerCase()) {
+        return paciente
+      }
+    });
+    if (!name) {
+      filteredConsultations = consultCard
+    }
+    setFilteredConsultation(filteredConsultations);
   }
 
   const handleTruehistory = () => {
-    // Define minhaVariavel como true
     setHistory(true);
   };
 
   const handleFalsehistory = () => {
-    // Define minhaVariavel como false
     setHistory(false);
   };
 
@@ -62,13 +77,17 @@ function Dashboard() {
               </div>
 
             </div>
-            <div className="simple-input-block">
+            <div className="inputStyle">
+              <button type="button" className="buttonSearch" onClick={searchPatients}>
+                <img src={searcIcon} />
+              </button>
               <input
                 id={name}
                 name={name}
-                placeholder="Busca por paciente"
-
+                placeholder="Busca por item"
+                onChange={(e) => setName(e.target.value)}
               />
+
             </div>
 
           </div>
@@ -97,24 +116,27 @@ function Dashboard() {
         }
 
 
-        <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row', position: 'relative', zIndex: 1
-          }} >
-            {dados.map((item, index) => (
-              <CardSevice key={index} dados={item} />
-            ))}
-          </div>
-          <div style={{
-            marginTop: '10px',
-            display: 'flex',
-            flexDirection: 'row', position: 'relative', zIndex: 1
-          }} >
-            {dados.map((item, index) => (
-              <CardSevice key={index} dados={item} />
-            ))}
-          </div>
+        <div style={{ paddingTop: "2%" }} >
+          {filteredConsultations.map((item, index) => (
+
+            <React.Fragment key={item?.name}>
+              {(index) % 2 === 0 && <div style={{
+                display: 'flex',
+                flexDirection: 'row', position: 'relative', zIndex: 1, paddingBottom: "2%"
+              }}><CardSevice name={item?.name} age={item?.age} consultation_time={item?.consultation_time} date_of_birth={item?.date_of_birth} date_of_consult={item?.date_of_consult} />
+                {filteredConsultations[index + 1] && (
+                  <CardSevice
+                    name={filteredConsultations[index + 1]?.name}
+                    age={filteredConsultations[index + 1]?.age}
+                    consultation_time={filteredConsultations[index + 1]?.consultation_time}
+                    date_of_birth={filteredConsultations[index + 1]?.date_of_birth}
+                    date_of_consult={filteredConsultations[index + 1]?.date_of_consult}
+                  />
+                )}     </div>}
+            </React.Fragment>
+          ))}
+
+
         </div>
       </div >
 
