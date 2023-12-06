@@ -127,6 +127,15 @@
     width: 330px;
   }
 }
+@media (max-width: 1480px) {
+  .cardMed {
+    height: 160px;
+    width: 80%;
+  }
+  .logoMedic {
+    width: 230px;
+  }
+}
 @media (max-width: 1163px) {
   .cardMed {
     height: 180px;

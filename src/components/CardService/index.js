@@ -4,17 +4,21 @@ import timeIcon from "./timeIcon.svg"
 import calendarIcon from "./calendarIcon.svg"
 import arrow from './arrow.svg'
 
-function CardSevice({ appointment }) {
+function CardSevice({ appointment, name,
+    age,
+    consultation_time,
+    date_of_birth,
+    date_of_consult }) {
     return (
         <div className="cardService">
             <div className="cadServiceMed1">
                 <img className="imgMed" src={LogoImage} alt="MedGestão" />
                 <div>
                     <div className='patientInformation' >
-                        <span>{appointment.name}</span>
+                        <span>{name}</span>
                     </div>
                     <div className='dateInformation'>
-                        <span>{appointment.birthDate} - {appointment.age} anos</span>
+                        <span>{date_of_birth} - {age} anos</span>
                     </div>
                 </div>
             </div>
@@ -22,11 +26,11 @@ function CardSevice({ appointment }) {
             <div className="cadServiceMed2">
                 <div className="agend">
                     <div className='dateInformation'>
-                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>{appointment.appointmentDate}</span>
+                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>{date_of_consult}</span>
 
                     </div>
                     <div className="dateInformation">
-                        <img src={timeIcon} style={{ marginRight: '10px' }} /> <span>{appointment.appointmentTime}</span>
+                        <img src={timeIcon} style={{ marginRight: '10px' }} /> <span>{consultation_time}</span>
 
                     </div>
                 </div>
