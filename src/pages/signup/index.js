@@ -111,34 +111,7 @@ function Signup() {
                 pattern: ZIP_CODE_PATTERN
               }}
             />
-            {/* <SimpleInput
-              name="street"
-              label="Rua"
-              value={address.logradouro}
-              placeholder="Rua"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="neighborhood"
-              label="Bairro"
-              value={address.bairro}
-              placeholder="Bairro"
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="city"
-              label="Cidade"
-              placeholder="Cidade"
-              value={address.localidade}
-              readOnly="readonly"
-            />
-            <SimpleInput
-              name="state"
-              label="Estado"
-              placeholder="Estado"
-              readOnly="readonly"
-              value={address.uf}
-            /> */}
+            
             {address.logradouro !== '' && <div className="address-details">
               <p>{address.logradouro} - {address.bairro} - {address.localidade}/{address.uf} </p>
             </div>}
@@ -151,9 +124,31 @@ function Signup() {
               register={register}
               validationSchema={{ required: true }}
             />
+
+            <InputWithMask
+              name="birthDate"
+              label="Data de nascimento"
+              mask="99/99/9999"
+              placeholder="09/09/2001"
+              errors={errors}
+              register={register}
+              validationSchema={{ 
+                required: true
+              }}
+            />
           </div>
           
           <div className="second-column">
+            <Select
+              name="sex"
+              label="Sexo"
+              placeholder="Sexo"
+              values={["Feminino", "Masculino"]}
+              errors={errors}
+              register={register}
+              validationSchema={{ required: "Selecione uma opção" }}
+            />
+
             <InputWithMask
               name="phone"
               mask="(99) 99999-9999"

@@ -14,67 +14,94 @@ import './styles.css'
 
 const DAYS_OF_WEEK = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"]
 const PERIODS = ["09:00 - 12:00", "14:00 - 18:00"]
-/* const DEFAULT_AVATAR_IMG = "https://images.ctfassets.net/h8qzhh7m9m8u/5459snTalzWRmionEbuZYo/d50b7e5b7f65f70bb37e127c7e73b79e/Doctors_green.png"
- */
-/* const DEFAULT_AVATAR_IMG = "https://img.freepik.com/free-psd/3d-healthcare-icon-with-medic_23-2150819694.jpg"
- */
 const DEFAULT_AVATAR_IMG = "https://t3.ftcdn.net/jpg/05/18/09/86/360_F_518098617_0PFa7dDxTysifBhhTGM3ccCbrLv43sNz.jpg"
-const ZIP_CODE_PATTERN = /^\d{5}-\d{3}$/
 
 function SecondSignup() {
   const navigate = useNavigate()
-  const [avatar, setAvatar] = useState('');
+  const [errorMessage, setErrorMessage] = useState("")
+  const [avatar, setAvatar] = useState(null);
   const [isAvatarEmpty, setIsAvatarEmpty] = useState(false);
-  const [address, setAddress] = useState({
-    "cep": "",
-    "logradouro": "",
-    "bairro": "",
-    "uf": ""
-  })
   const [selectedDays, setSelectedDays] = useState([])
   const [selectedPeriods, setSelectedPeriods] = useState([])
   const { register, handleSubmit, reset, clearErrors, formState: { errors }, watch, setError } = useForm()
   const { state } = useLocation();
 
-  const handleSignup = async (data) => {
-    console.log(state)
+  useEffect(() => {
+    if (!state) {
+      navigate("/signup")
+    }
+  });
 
-    console.log(data)
+  const uploadImage = async () => {
+    var uploadData = new FormData();
+    uploadData.append('file', avatar)
+
+    try {
+      var response = await BackendClient.post('/api/upload', uploadData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      setErrorMessage("")
+      return response.data.imageUrl;
+    } catch (exception) {
+      console.log("Erro ao salvar imagem")
+      setErrorMessage("Erro ao salvar imagem")
+    }
+  }
+
+  const formatDate = (inputDateString) => {
+    // Parse the input date
+    const [day, month, year] = inputDateString.split('/');
+    const parsedDate = new Date(`${year}-${month}-${day}T00:00:00Z`);
+    return parsedDate;
+  }
+
+  const handleSignup = async (data) => {
+    if (avatar === null) {
+      setIsAvatarEmpty(true)
+      return
+    }
+    setIsAvatarEmpty(false)
 
     const filteredPeriods = getOnlyValidPeriods()
-    console.log(filteredPeriods)
+    // Upload Doctor Image
+    var fileURL = await uploadImage();
 
+    // Save Doctor
     const doctorRequest = {
       "user": {
-        "name": "Samara",
-        "birthDate": "2000-04-12T00:00:00Z",
-        "cpf": "13968049438",
-        "sex": "F",
-        "address": "rua A",
-        "email": "test2@gmail.com",
-        "password": "12344",
-        "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg*",
+        "name": state.name,
+        "birthDate": formatDate(state.birthDate),
+        "cpf": state.cpf.replace(/\D/g, ''),
+        "sex": state.sex.charAt(0),
+        "address": state.zipCode.replace(/\D/g, ''),
+        "number": state.number,
+        "email": state.email,
+        "password": state.password,
+        "imageUrl": fileURL,
         "cellphoneUser": {
-          "number": "829299292"
+          "number": state.phone
         }
       },
-      "crm": "123",
+      "crm": state.crm,
       "specialty": {
-        "description": "Ginecologista"
+        "description": state.specialty
       }
     }
   
-    /* try {
+    console.log(doctorRequest)
+
+    try {
       var response = await BackendClient.post('/api/doctors', doctorRequest)
       console.log(response.status)
       console.log(response.data.message)
+
+      setErrorMessage("")
+      reset()
+      navigate("/dashboard")
     } catch (exception) {
+      setErrorMessage(exception.response.data.message)
       console.log(exception.response.data.message)
-    } */
-    
-    /* localStorage.setItem("mykey","myvalue") */
-    /* reset() */
-    navigate("/dashboard")
+    } 
   }
 
   const getOnlyValidPeriods = () => {
@@ -92,7 +119,6 @@ function SecondSignup() {
   const handleUploadAvatar = useCallback(
     (event) => {
       if (event.target.files) {
-        console.log(event.target.files[0])
         setAvatar(event.target.files[0]);
       }
     },
@@ -118,7 +144,6 @@ function SecondSignup() {
   const isSelectedPeriod = (day, period) => {
     return selectedPeriods[day]?.length > 0 && selectedPeriods[day].indexOf(period) > -1
   } 
-
 
   const handleSelectedPeriods = (day, period) => {
     if (selectedPeriods[day]) {
@@ -189,8 +214,13 @@ function SecondSignup() {
               validationSchema={{ required: true }}
             />
 
-            <button className="btn-submit" type="submit">Finalizar cadastro</button>
+            {errorMessage !== "" && (
+              <div className="active">
+                <span className="error">{errorMessage}</span>
+              </div>
+            )}
 
+            <button className="btn-submit" type="submit">Finalizar cadastro</button>
           </aside>
           <div id="upload" className="signup-select-block upload">
             <h3>Sua melhor foto</h3>
@@ -210,7 +240,11 @@ function SecondSignup() {
                   <span>Selecionar foto</span>
               </label>
             </div>
-            <span className={`upload-error ${isAvatarEmpty ? 'active' : ''}`}>Oops! Você esqueceu de adicionar sua foto!</span>
+
+            {isAvatarEmpty && (
+              <div className="active-img">
+                <span className='upload-error'>Oops! Você esqueceu de adicionar sua foto!</span>
+              </div>)}
           </div>
         </form>
       </main>

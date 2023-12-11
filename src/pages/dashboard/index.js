@@ -8,6 +8,7 @@ import calendarIcon from "./calendar.svg"
 import arrowIcon from "./arrow.svg"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Link, useNavigate } from 'react-router-dom'
 
 function Dashboard() {
   const appointment = { 
@@ -22,8 +23,15 @@ function Dashboard() {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [history, setHistory] = useState(false);
   const name = useState()
+  const navigate = useNavigate()
 
   useEffect(() => {
+    var doctor_id = localStorage.getItem("doctor_id");
+
+    if (!doctor_id) {
+      navigate("/")
+    }
+
     setData([appointment, appointment, appointment, appointment])
   }, [])
 
