@@ -3,12 +3,24 @@ import LogoImage from "./logo.svg";
 import timeIcon from "./timeIcon.svg"
 import calendarIcon from "./calendarIcon.svg"
 import arrow from './arrow.svg'
+import attendanceModal from '../attendanceModal'
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+
 
 function CardSevice({ appointment, name,
     age,
     consultation_time,
     date_of_birth,
-    date_of_consult }) {
+    date_of_consult, openModal, ...props }) {
+
+
+    const startAttendance = () => {
+
+        openModal(); // call the prop function
+
+    };
+
     return (
         <div className="cardService">
             <div className="cadServiceMed1">
@@ -35,13 +47,12 @@ function CardSevice({ appointment, name,
                     </div>
                 </div>
             </div>
-            <button className='buttonService'>
+            <button className='buttonService' onClick={startAttendance}>
                 <span className='titleButton' style={{ marginRight: '10px' }}>
                     Iniciar atendimento
                 </span>
                 <img src={arrow} alt="arrowButton" />
             </button>
-
         </div >
 
     );
