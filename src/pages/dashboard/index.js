@@ -7,8 +7,12 @@ import React, { useState, useEffect } from 'react';
 import calendarIcon from "./calendar.svg"
 import arrowIcon from "./arrow.svg"
 import searcIcon from "./searchIcon.svg"
+import LogoImage from "../../components/CardService/logo.svg";
+import TimeIcon from '../../components/CardService/timeIcon.svg'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import positiveIcon from './positiveIcon.svg'
+import Modal from 'react-modal';
 
 function Dashboard() {
   const [consultCard, setConsultCard] = useState([{ name: "marcos", age: "25", date_of_birth: "00/00/0000", date_of_consult: "12/12/2024", consultation_time: "11:00" },
@@ -23,6 +27,23 @@ function Dashboard() {
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [history, setHistory] = useState(false);
   const [name, setName] = useState()
+  const estiloModal = {
+    content: {
+      width: '50%',
+      height: '95%',
+      margin: 'auto',
+      background: '#202125',
+      borderRadius: '8px',
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+      borderStyle: 'hidden'
+    },
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+  };
+
+  const [modalAberto, setModalAberto] = useState(false);
+  const openModal = () => { console.log("s"); setModalAberto(true) };
 
   var [filteredConsultations, setFilteredConsultation] = useState(consultCard)
   useEffect(() => {
@@ -133,9 +154,9 @@ function Dashboard() {
 
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'row', position: 'relative', zIndex: 1, paddingBottom: "2%"
+                    flexDirection: 'row', position: 'relative', paddingBottom: "2%"
                   }}>
-                    <CardSevice appointment={consultCard} name={item?.name} age={item?.age} consultation_time={item?.consultation_time} date_of_birth={item?.date_of_birth} date_of_consult={item?.date_of_consult} />
+                    <CardSevice openModal={openModal} appointment={consultCard} name={item?.name} age={item?.age} consultation_time={item?.consultation_time} date_of_birth={item?.date_of_birth} date_of_consult={item?.date_of_consult} />
 
 
                   </div>
@@ -143,8 +164,72 @@ function Dashboard() {
               </div>
             </div >)}
 
+
       </div >
+
       <LatestConsultations />
+      <div>
+
+        <Modal
+
+          isOpen={modalAberto}
+          onRequestClose={() => setModalAberto(false)}
+          style={estiloModal}
+        >
+          <div className="atendaceModal">
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <span className="titleModal">Informações do paciente</span>
+              <button className="closeModal" onClick={() => setModalAberto(false)} >X</button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-start' }}>
+              <img src={LogoImage} />
+              <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
+                <span className='title' >jorge Silva</span>
+                <span style={{ color: '#afb4b2' }}> 11/11/2023 - 42 anos - masculino </span>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: 'column' }}>
+              <span className="titleModal">Queixas</span>
+              <textarea className="textArea" rows="4" cols="50" type="text" placeholder="Paciente está sentindo dores no peito e falta de ar durante exercícios físicos..." />
+            </div>
+            <div style={{ display: "flex", flexDirection: 'column' }}>
+              <span className="titleModal">Outras Anotações</span>
+              <textarea className="textArea" rows="4" cols="50" type="text" placeholder="Paciente está sentindo dores no peito e falta de ar durante exercícios físicos..." />
+            </div>
+            <div style={{ display: "flex", flexDirection: 'column' }}>
+              <span className="titleModal">Recomendações</span>
+              <textarea wrap="hard" className="textArea" rows="4" cols="50" type="text" placeholder="Paciente está sentindo dores no peito e falta de ar durante exercícios físicos..." />
+            </div>
+          </div>
+          <div className="" style={{ marginTop: '5%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', background: '#' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <div>
+
+                <img src={calendarIcon}></img>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '10%' }}>
+
+                <span>11/11/2023</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}>
+              <div>
+                <img src={TimeIcon} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '10%' }}>
+
+                <span>11:00</span>
+              </div>
+            </div>
+            <button className='buttonServiceCompleted'>
+              <img src={positiveIcon} alt="arrowButton" style={{ marginRight: '5%' }} />
+              <span className='titleButton' style={{ marginRight: '10px' }}>
+                Concluir atendimento
+              </span>
+            </button>
+          </div>
+        </Modal>
+      </div>
     </div>
   )
 }
