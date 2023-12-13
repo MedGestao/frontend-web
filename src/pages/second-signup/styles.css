@@ -145,16 +145,16 @@
   background-color: var(--primary-green);
 }
 
-.upload-error {
+.second-register-container .upload-error {
   color: var(--orange);
 }
 
-.active {
+.second-register-container .active {
   display: block;
   margin-top: 1.2rem;
 }
 
-.active-img {
+.second-register-container .active-img {
   display: block;
 }
 

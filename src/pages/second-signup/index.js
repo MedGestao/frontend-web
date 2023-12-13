@@ -25,6 +25,7 @@ function SecondSignup() {
   const [selectedPeriods, setSelectedPeriods] = useState([])
   const { register, handleSubmit, reset, clearErrors, formState: { errors }, watch, setError } = useForm()
   const { state } = useLocation();
+  const [doctorId, setDoctorId] = useState(null);
 
   useEffect(() => {
     if (!state) {
@@ -58,7 +59,7 @@ function SecondSignup() {
   const DaysOfWeek = {
     Domingo: 1 ,
     Segunda: 2,
-    Terca: 3,
+    Terça: 3,
     Quarta: 4,
     Quinta: 5,
     Sexta: 6,
@@ -72,40 +73,45 @@ function SecondSignup() {
     }
     setIsAvatarEmpty(false)
 
-    // Upload Doctor Image
-     var fileURL = await uploadImage();
-    // Save Doctor
-    const doctorRequest = {
-      "user": {
-        "name": state.name,
-        "birthDate": formatDate(state.birthDate),
-        "cpf": state.cpf.replace(/\D/g, ''),
-        "sex": state.sex.charAt(0),
-        "address": state.zipCode.replace(/\D/g, ''),
-        "number": state.number,
-        "email": state.email,
-        "password": state.password,
-        "imageUrl": fileURL,
-        "cellphoneUser": {
-          "number": state.phone
-        }
-      },
-      "crm": state.crm,
-      "specialty": {
-        "description": state.specialty
-      }
-    }
+    var id = null
 
-    var doctorId
-    try {
-      var response = await BackendClient.post('/api/doctors', doctorRequest)
-      doctorId = response.data.id
-      setErrorMessage("")
-    } catch (exception) {
-      setErrorMessage(exception.response.data.message)
-      console.log(exception.response.data.message)
-      return
-    } 
+    if (doctorId === null) {
+      // Upload Doctor Image
+      var fileURL = await uploadImage();
+      // Save Doctor
+      const doctorRequest = {
+        "user": {
+          "name": state.name,
+          "birthDate": formatDate(state.birthDate),
+          "cpf": state.cpf.replace(/\D/g, ''),
+          "sex": state.sex.charAt(0),
+          "address": state.zipCode.replace(/\D/g, ''),
+          "number": state.number,
+          "email": state.email,
+          "password": state.password,
+          "imageUrl": fileURL,
+          "cellphoneUser": {
+            "number": state.phone
+          }
+        },
+        "crm": state.crm,
+        "specialty": {
+          "id": parseInt(state.specialty),
+          "description": state.specialty
+        }
+      }
+
+      try {
+        var response = await BackendClient.post('/api/doctors', doctorRequest)
+        id = response.data.id
+        setDoctorId(response.data.id)
+        setErrorMessage("")
+      } catch (exception) {
+        setErrorMessage(exception.response.data.message)
+        console.log(exception.response.data.message)
+        return
+      } 
+    }
 
     try {
       var scheduleRequest = []
@@ -115,8 +121,9 @@ function SecondSignup() {
           console.log(key, value)
           var schedule = {
             "doctorId": {
-              "id": doctorId
+              "id": doctorId == null ? id : doctorId
             },
+            "scheduleLimit": parseInt(data.countPatients),
             "queryValue": parseFloat(data.price),
             "dayOfService": `${DaysOfWeek[key]}`,
             "period1": value[0] ? value[0] : '',
@@ -251,6 +258,8 @@ function SecondSignup() {
               name="countPatients"
               label="Quantidade de pacientes por período"
               placeholder="10"
+              type="number"
+              min="1"
               errors={errors}
               register={register}
               validationSchema={{ required: true }}
