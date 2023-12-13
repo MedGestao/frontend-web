@@ -26,7 +26,6 @@ function Login() {
       navigate("/dashboard")
     } catch (exception) {
       setHasError(true)
-      console.log(exception.response.data.message)
     }
   }
 

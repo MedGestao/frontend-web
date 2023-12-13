@@ -137,7 +137,7 @@ function SecondSignup() {
       console.log(response.data)
       setErrorMessage("")
       reset()
-      navigate("/dashboard")
+      navigate("/")
     } catch (exception) {
       setErrorMessage("Erro ao salvar agenda")
       return
