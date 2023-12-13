@@ -61,12 +61,6 @@ function Signup() {
         } 
       })
 
-  /*     const response = await api.get('teachers', {
-        params: {
-          subject,
-        },
-      }); */
-
       setErrorMessage("")
     } catch (exception) {
       setErrorMessage("O e-mail já está cadastrado")
