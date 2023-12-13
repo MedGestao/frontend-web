@@ -9,6 +9,11 @@
   flex-direction: row;
 }
 
+.login-container .error {
+  font-size: 0.8rem;
+  color: var(--orange);
+}
+
 .login-container section.form {
   width: 100%;
   max-width: 500px;

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 
@@ -5,17 +6,28 @@ import DoctorsImage from "../../assets/login-image.svg"
 import Input from '../../components/Input'
 import './styles.css'
 import Header from '../../components/Header'
+import { BackendClient } from '../../service/client'
 
 function Login() {
   const navigate = useNavigate()
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  const [hasError, setHasError] = useState(false)
 
-  const handleLogin = (data) => {
+  const handleLogin = async (data) => {
     console.log(data)
-    /* localStorage.setItem("mykey","myvalue"); */
+    try {
+      var response = await BackendClient.post('/api/doctors/login', data)
+      console.log(response.data.message)
 
-    reset()
-    navigate("/dashboard")
+      localStorage.setItem("doctor_id", response.data.id);
+
+      setHasError(false)
+      reset()
+      navigate("/dashboard")
+    } catch (exception) {
+      setHasError(true)
+      console.log(exception.response.data.message)
+    }
   }
 
   return (
@@ -47,6 +59,8 @@ function Login() {
               register={register}
               validationSchema={{ required: true }}
             />
+
+            {hasError && <span className="error">E-mail ou Senha inválidos</span>}
 
             <button type="submit">Entrar</button>
           </form>

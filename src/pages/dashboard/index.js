@@ -13,8 +13,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import positiveIcon from './positiveIcon.svg'
 import Modal from 'react-modal';
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 function Dashboard() {
+  const navigate = useNavigate()
   const [consultCard, setConsultCard] = useState([{ name: "marcos", age: "25", date_of_birth: "00/00/0000", date_of_consult: "12/12/2024", consultation_time: "11:00" },
   { name: "Maria", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
   { name: "marta", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
@@ -47,6 +49,12 @@ function Dashboard() {
 
   var [filteredConsultations, setFilteredConsultation] = useState(consultCard)
   useEffect(() => {
+    var doctor_id = localStorage.getItem("doctor_id");
+    
+    if (!doctor_id) {
+      navigate("/")
+    }
+
     setData([consultCard, consultCard, consultCard, consultCard])
   }, [])
 
