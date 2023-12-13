@@ -55,6 +55,16 @@ function SecondSignup() {
     return parsedDate;
   }
 
+  const DaysOfWeek = {
+    Domingo: 1 ,
+    Segunda: 2,
+    Terca: 3,
+    Quarta: 4,
+    Quinta: 5,
+    Sexta: 6,
+    Sabado: 7,
+  };
+
   const handleSignup = async (data) => {
     if (avatar === null) {
       setIsAvatarEmpty(true)
@@ -62,10 +72,8 @@ function SecondSignup() {
     }
     setIsAvatarEmpty(false)
 
-    const filteredPeriods = getOnlyValidPeriods()
     // Upload Doctor Image
-    var fileURL = await uploadImage();
-
+     var fileURL = await uploadImage();
     // Save Doctor
     const doctorRequest = {
       "user": {
@@ -87,20 +95,45 @@ function SecondSignup() {
         "description": state.specialty
       }
     }
-  
-    console.log(doctorRequest)
 
+    var doctorId
     try {
       var response = await BackendClient.post('/api/doctors', doctorRequest)
-      console.log(response.status)
-      console.log(response.data.message)
+      doctorId = response.data.id
+      setErrorMessage("")
+    } catch (exception) {
+      setErrorMessage(exception.response.data.message)
+      console.log(exception.response.data.message)
+      return
+    } 
 
+    try {
+      var scheduleRequest = []
+      var filteredPeriods = getOnlyValidPeriods()
+      Object.fromEntries(
+        Object.entries(filteredPeriods).filter(([key, value]) => {
+          console.log(key, value)
+          var schedule = {
+            "doctorId": {
+              "id": doctorId
+            },
+            "queryValue": parseFloat(data.price),
+            "dayOfService": `${DaysOfWeek[key]}`,
+            "period1": value[0] ? value[0] : '',
+            "period2": value[1] ? value[1] : ''
+          }
+          scheduleRequest.push(schedule)
+        })
+      );
+
+      var response = await BackendClient.post('/api/doctors/schedule', scheduleRequest)   
+      console.log(response.data)
       setErrorMessage("")
       reset()
       navigate("/dashboard")
     } catch (exception) {
-      setErrorMessage(exception.response.data.message)
-      console.log(exception.response.data.message)
+      setErrorMessage("Erro ao salvar agenda")
+      return
     } 
   }
 
@@ -209,6 +242,15 @@ function SecondSignup() {
               name="price"
               label="Valor da consulta"
               placeholder="R$ 200"
+              errors={errors}
+              register={register}
+              validationSchema={{ required: true }}
+            />
+
+            <Input
+              name="countPatients"
+              label="Quantidade de pacientes por período"
+              placeholder="10"
               errors={errors}
               register={register}
               validationSchema={{ required: true }}
