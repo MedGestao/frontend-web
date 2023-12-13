@@ -1,0 +1,43 @@
+.select-block {
+  position: relative;
+  margin-top: 0.8rem;
+}
+
+.select-block label {
+  font-size: 1rem;
+  
+  font-weight: 500;
+}
+
+.select-block select {
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 0.8rem;
+  background: var(--third-background);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  outline: 0;
+  padding: 1.4rem;
+}
+
+.select-block option {
+  color: var(--text-primary);
+}
+
+.select-block select:focus {
+  border: 1px solid var(--primary-green);
+}
+
+.select-block span {
+  display: none;
+}
+
+.select-block .invalid-field {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--orange);
+}
+
+.select-block .invalid-select {
+  border: 1px solid var(--orange);
+}

@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom'
 
 import { ViaCepClient } from '../../service/client'
+import { BackendClient } from '../../service/client'
 
 import Input from '../../components/Input';
 import InputWithMask from '../../components/InputWithMask';
 import Header from "../../components/Header";
 import Select from "../../components/Select";
 import './styles.css';
+import SelectSpecialty from "../../components/SelectSpecialty";
 
 const PHONE_PATTERN = /^(\(\d{2}\) )\d{5}-\d{4}$/
 const ZIP_CODE_PATTERN = /^\d{5}-\d{3}$/
@@ -21,13 +23,14 @@ function Signup() {
     "bairro": "",
     "uf": ""
   })
-  const { register, handleSubmit, watch, clearErrors, setError, reset, formState: { errors } } = useForm()
+  const [errorMessage, setErrorMessage] = useState("")
+  const { register, handleSubmit, watch, clearErrors, setError, formState: { errors } } = useForm()
   const watchZipCode = watch('zipCode', '')
 
   useEffect(() => {
     if (watchZipCode.match(ZIP_CODE_PATTERN))
       getAddressByZipCode(watchZipCode)
-  }, [watchZipCode]);
+  }, [watchZipCode]); 
 
   const getAddressByZipCode = (zipCode) => {
     if (zipCode !== null) {
@@ -49,10 +52,27 @@ function Signup() {
     }
   }
 
-  const handleSignup = (data) => {
-    console.log(data);
-    /* localStorage.setItem("mykey","myvalue"); */
-    
+  const handleSignup = async (data) => {    
+    console.log(data)
+    try {
+      await BackendClient.get('/api/validate-email', { 
+        params: {
+          email: data.email
+        } 
+      })
+
+  /*     const response = await api.get('teachers', {
+        params: {
+          subject,
+        },
+      }); */
+
+      setErrorMessage("")
+    } catch (exception) {
+      setErrorMessage("O e-mail já está cadastrado")
+      return
+    } 
+
     navigate("/signup-second-step", {
       state: data
     })
@@ -162,11 +182,10 @@ function Signup() {
               }}
             />
 
-            <Select
+            <SelectSpecialty
               name="specialty"
               label="Especialidade"
               placeholder="Especialidade"
-              values={["Ginecologista", "Cardiologista"]}
               errors={errors}
               register={register}
               validationSchema={{ required: "Selecione uma opção" }}
@@ -208,6 +227,12 @@ function Signup() {
                 }
               }}}
             />
+
+            {errorMessage !== "" && (
+              <div className="active">
+                <span className="error">{errorMessage}</span>
+              </div>
+            )}
 
             <button type="submit">Próxima etapa</button>
           </div>
