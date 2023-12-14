@@ -8,22 +8,19 @@ import calendarIcon from "./calendar.svg"
 import arrowIcon from "./arrow.svg"
 import searcIcon from "./searchIcon.svg"
 import LogoImage from "../../components/CardService/logo.svg";
+import DoctorTriste from "../../assets/doctorTriste.svg";
 import TimeIcon from '../../components/CardService/timeIcon.svg'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import positiveIcon from './positiveIcon.svg'
 import Modal from 'react-modal';
+import { BackendClient } from '../../service/client'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 function Dashboard() {
   const navigate = useNavigate()
-  const [consultCard, setConsultCard] = useState([{ name: "marcos", age: "25", date_of_birth: "00/00/0000", date_of_consult: "12/12/2024", consultation_time: "11:00" },
-  { name: "Maria", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
-  { name: "marta", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
-  { name: "joana", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
-  { name: "Carlos", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" },
-  { name: "Kevin", age: "16", date_of_birth: "08/12/2007", date_of_consult: "02/07/2024", consultation_time: "12:00" }
-  ])
+  const [consultCard, setConsultCard] = useState()
+  const [consultsToday, setConsultsToday] = useState()
   const [data, setData] = useState([]);
   const [date, setDate] = useState(new Date());
   const [isCalendarVisible, setCalendarVisible] = useState(false);
@@ -45,24 +42,65 @@ function Dashboard() {
   };
 
   const [modalAberto, setModalAberto] = useState(false);
-  const openModal = () => { console.log("s"); setModalAberto(true) };
+  const [appointment, setAppointment] = useState(false)
+  const openModal = (appointment) => {
+    setModalAberto(true);
+    let dataObj = new Date(appointment.birthDate)
+    appointment.birthDate = dataObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    let dataObj2 = new Date(appointment.patientDoctorConsultationResponse?.appointmentDate);
+    appointment.patientDoctorConsultationResponse.appointmentDate = dataObj2.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    setAppointment(appointment)
+  };
 
   var [filteredConsultations, setFilteredConsultation] = useState(consultCard)
+  const [doctor, setDoctor] = useState();
+
+  const fetchUser = async (doctor_id) => {
+    // try {
+    const dateFormat = { appointmentDate: date.toISOString().split('T')[0] + 'T00:00:00Z' };
+
+    var response = await BackendClient.get(`/api/doctors/${doctor_id}`)
+    var response2 = await BackendClient.put(`/api/patientDoctorConsultation/searchByDoctor/${doctor_id}`, dateFormat);
+    setDoctor(response.data)
+    setConsultCard(response2.data)
+    let consultsOpen = 0
+    let total = 0
+    response2.data?.forEach(c => {
+      if (c.patientDoctorConsultationResponse.status === 'A') {
+        consultsOpen += 1;
+      }
+      total++;
+    });
+    var consult = { total: total, consultsOpen: consultsOpen }
+
+
+    setConsultsToday(consult)
+
+    // } catch (exception) {
+    //   setErrorMessage(exception.response.data.message)
+    //   return
+    // }
+  }
+
   useEffect(() => {
     var doctor_id = localStorage.getItem("doctor_id");
-    
+
     if (!doctor_id) {
       navigate("/")
+    }
+    else {
+      fetchUser(doctor_id);
     }
 
     setData([consultCard, consultCard, consultCard, consultCard])
   }, [])
 
   const searchPatients = () => {
-    filteredConsultations = consultCard.filter(paciente => {
+    filteredConsultations = consultCard.filter(patient => {
 
-      if (paciente.name.toLowerCase() == name.toLowerCase()) {
-        return paciente
+      if (patient.name?.toLowerCase() == name?.toLowerCase()) {
+
+        return patient
       }
     });
     if (!name) {
@@ -79,7 +117,6 @@ function Dashboard() {
     setHistory(false);
   };
 
-
   const showCalendar = () => {
     setCalendarVisible(true);
   };
@@ -88,9 +125,37 @@ function Dashboard() {
     setCalendarVisible(false);
   };
 
+  const searchConsult = async (newDate) => {
+    setDate(newDate)
+    var doctor_id = localStorage.getItem("doctor_id");
+    const dateFormat = { appointmentDate: newDate.toISOString().split('T')[0] + 'T00:00:00Z' };
+
+
+    var response = await BackendClient.put(`/api/patientDoctorConsultation/searchByDoctor/${doctor_id}`, dateFormat);
+    setConsultCard(response.data)
+
+    let consultsOpen = 0
+    let total = 0
+    var consultsHistorys = []
+    response.data?.forEach(c => {
+      if (c.patientDoctorConsultationResponse.status === 'A') {
+        consultsOpen += 1;
+      }
+      if (c.patientDoctorConsultationResponse.status === 'F') {
+        consultsHistorys.push(c)
+      }
+
+      total++;
+    });
+    var consult = { total: total, consultsOpen: consultsOpen }
+    setFilteredConsultation(consultsHistorys)
+    setConsultsToday(consult)
+
+  }
+
   return (
     <div className="Dashboard">
-      <Drawer isActive={history} active={handleTruehistory} desactive={handleFalsehistory} />
+      <Drawer doctor={doctor} isActive={history} active={handleTruehistory} desactive={handleFalsehistory} />
 
       <div className="schedule">
         {history ?
@@ -106,7 +171,7 @@ function Dashboard() {
                   <div className="" style={{ display: 'flex' }} > <img src={arrowIcon} style={{ marginRight: '10px' }} /> {/*   */} </div>
                 </div>
                 <div style={{ position: 'absolute', zIndex: 2 }}>
-                  {isCalendarVisible && <Calendar onChange={setDate} value={date} />}
+                  {isCalendarVisible && <Calendar onChange={(newDate) => { searchConsult(newDate) }} value={date} />}
                 </div>
               </div>
 
@@ -118,26 +183,32 @@ function Dashboard() {
               <input
                 id={name}
                 name={name}
-                placeholder="Busca por item"
+                placeholder="Busca por nome do Paciente"
                 onChange={(e) => setName(e.target.value)}
               />
 
             </div>
-            <div className="dash-cards">
-              {filteredConsultations.map((item, index) => (
-                <CardSevice appointment={consultCard}
-                  name={item?.name}
-                  age={item?.age}
-                  consultation_time={item?.consultation_time}
-                  date_of_birth={item?.date_of_birth}
-                  date_of_consult={item?.date_of_consult} />
-              ))}
+            <div className={filteredConsultations?.length ? "dash-cards" : ""}>
+              {filteredConsultations?.length ? (
+                filteredConsultations.map((item, index) => item?.patientDoctorConsultationResponse.status === 'F' && (
+                  <CardSevice
+                    appointment={consultCard}
+                    name={item?.name}
+                    age={item?.age}
+                    consultation_time={item?.patientDoctorConsultationResponse?.appointmentTime}
+                    date_of_birth={item?.birthDate}
+                    date_of_consult={item?.patientDoctorConsultationResponse?.appointmentDate}
+                  />
+                ))
+              ) : (<div style={{ marginTop: '70px', display: 'flex', flexDirection: 'row', position: 'relative' }}><h1>Não achamos nenhum resultado que coresponde a essa data </h1><img style={{ height: '200px' }} src={DoctorTriste} /></div>)
+              }
+
             </div>
           </div>
 
           : (
             <div>
-              <CardMedicals className="cardDoctor" />
+              <CardMedicals className="cardDoctor" name={doctor.user.name} />
               <div className="agendConsult" >
                 <div className="title">Consultas Agendadas</div>
                 <div className="ts" onMouseOver={showCalendar} onMouseOut={hideCalendar}>
@@ -150,36 +221,43 @@ function Dashboard() {
                     <div className="" style={{ display: 'flex' }} > <img src={arrowIcon} style={{ marginRight: '10px' }} /> {/*   */} </div>
                   </div>
                   <div style={{ position: 'absolute', zIndex: 2 }}>
-                    {isCalendarVisible && <Calendar onChange={setDate} value={date} />}
+                    {isCalendarVisible && <Calendar onChange={(newDate) => { searchConsult(newDate) }} value={date} />}
                   </div>
                 </div>
               </div>
 
 
-              <div className="dash-cards"  >
-                {consultCard.map((item, index) => (
+              <div className={consultCard ? "dash-cards" : ""}  >
+                {
+                  consultCard ? (
+                    consultCard?.map((item, index) => item?.patientDoctorConsultationResponse.status === 'A' && (
 
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'row', position: 'relative', paddingBottom: "2%"
+                      }}>
+                        <CardSevice openModal={openModal}
+                          appointment={item}
+                          name={item?.name}
+                          age={item?.age}
+                          consultation_time={item?.patientDoctorConsultationResponse?.appointmentTime}
+                          date_of_birth={item?.birthDate}
+                          date_of_consult={item?.patientDoctorConsultationResponse?.appointmentDate} />
 
-                  <div style={{
-                    display: 'flex',
-                    flexDirection: 'row', position: 'relative', paddingBottom: "2%"
-                  }}>
-                    <CardSevice openModal={openModal} appointment={consultCard} name={item?.name} age={item?.age} consultation_time={item?.consultation_time} date_of_birth={item?.date_of_birth} date_of_consult={item?.date_of_consult} />
-
-
-                  </div>
-                ))}
+                      </div>
+                    )
+                    )) : (<div style={{ marginTop: '70px', display: 'flex', flexDirection: 'row', position: 'relative' }}><h1>Não achamos nenhum resultado que coresponde a essa data </h1><img style={{ height: '200px' }} src={DoctorTriste} /></div>)
+                }
               </div>
             </div >)}
 
 
       </div >
 
-      <LatestConsultations />
+      <LatestConsultations consultsToday={consultsToday} />
       <div>
 
         <Modal
-
           isOpen={modalAberto}
           onRequestClose={() => setModalAberto(false)}
           style={estiloModal}
@@ -192,8 +270,8 @@ function Dashboard() {
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-start' }}>
               <img src={LogoImage} />
               <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
-                <span className='title' >jorge Silva</span>
-                <span style={{ color: '#afb4b2' }}> 11/11/2023 - 42 anos - masculino </span>
+                <span className='title' >{appointment.name}</span>
+                <span style={{ color: '#afb4b2' }}> {appointment.birthDate}- {appointment.age} anos </span>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: 'column' }}>
@@ -212,12 +290,11 @@ function Dashboard() {
           <div className="" style={{ marginTop: '5%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', background: '#' }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <div>
-
                 <img src={calendarIcon}></img>
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '10%' }}>
 
-                <span>11/11/2023</span>
+                <span>{appointment.patientDoctorConsultationResponse?.appointmentDate}</span>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}>
@@ -226,7 +303,7 @@ function Dashboard() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '10%' }}>
 
-                <span>11:00</span>
+                <span>{appointment.patientDoctorConsultationResponse?.appointmentTime}</span>
               </div>
             </div>
             <button className='buttonServiceCompleted'>

@@ -1,13 +1,13 @@
 import './style.css';
 import LogoImage from "./logo.svg";
 
-function Card() {
+function Card(props) {
     return (
         <div className="card">
-            <img className="img" src={LogoImage} alt="MedGestão" />
+            <img className="img" src={props.doctor?.user.imageUrl} alt="MedGestão" />
             <div className="titles">
-                <span className="nameMedic">Joana Maria</span>
-                <span className="crmNumber">CRM: 0000</span>
+                <span className="nameMedic">{props.doctor?.user.name}</span>
+                <span className="crmNumber">CRM: {props.doctor?.crm}</span>
             </div>
         </div>
     );

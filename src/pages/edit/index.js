@@ -41,7 +41,7 @@ function Edit() {
             "uf": ""
           })
           setError('zipCode', { type: 'custom', message: 'CEP inválido' })
-          return 
+          return
         }
         clearErrors('zipCode')
         setAddress(response.data);
@@ -50,9 +50,9 @@ function Edit() {
   }
 
   const handleEdit = (data) => {
-    console.log(data);
+
     /* localStorage.setItem("mykey","myvalue"); */
-    
+
     navigate("/signup-second-step", {
       state: data
     })
@@ -80,9 +80,9 @@ function Edit() {
               placeholder="exemplo@gmail.com"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true,   
-                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
+              validationSchema={{
+                required: true,
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
               }}
             />
 
@@ -93,8 +93,8 @@ function Edit() {
               placeholder="999.999.999-99"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: /^\d{3}.\d{3}.\d{3}-\d{2}$/
               }}
             />
@@ -106,12 +106,12 @@ function Edit() {
               placeholder="57304-467"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: ZIP_CODE_PATTERN
               }}
             />
-            
+
             {address.logradouro !== '' && <div className="address-details">
               <p>{address.logradouro} - {address.bairro} - {address.localidade}/{address.uf} </p>
             </div>}
@@ -125,7 +125,7 @@ function Edit() {
               validationSchema={{ required: true }}
             />
           </div>
-          
+
           <div className="second-column">
             <InputWithMask
               name="phone"
@@ -134,8 +134,8 @@ function Edit() {
               placeholder="(99) 99999-9999"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: PHONE_PATTERN
               }}
             />
@@ -176,15 +176,16 @@ function Edit() {
               placeholder="********"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
-                maxLength: 8, 
+              validationSchema={{
+                required: true,
+                maxLength: 8,
                 minLength: 8,
                 validate: (value) => {
-                if (watch('password') !== value) {
-                  return "As senhas que você escreveu não correspondem";
+                  if (watch('password') !== value) {
+                    return "As senhas que você escreveu não correspondem";
+                  }
                 }
-              }}}
+              }}
             />
 
             <button type="submit">Próxima etapa</button>

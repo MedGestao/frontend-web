@@ -24,7 +24,7 @@ const FollowUp = (props) => {
         </div>
         <span style={{ color: cor, fontSize: size }} >{props.title}</span>
       </div>
-      <span className="valueCard">10</span>
+      <span className="valueCard">{props.total ? props.total : 0}</span>
     </div>
   );
 
