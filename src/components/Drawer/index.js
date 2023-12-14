@@ -16,7 +16,7 @@ function Drawer(props) {
       </div>
 
       <div className="center">
-        <Card />
+        <Card doctor={props.doctor} />
       </div>
 
     </div>

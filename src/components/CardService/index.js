@@ -7,7 +7,6 @@ import attendanceModal from '../attendanceModal'
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 
-
 function CardSevice({ appointment, name,
     age,
     consultation_time,
@@ -17,8 +16,7 @@ function CardSevice({ appointment, name,
 
     const startAttendance = () => {
 
-        openModal(); // call the prop function
-
+        openModal();
     };
 
     return (
