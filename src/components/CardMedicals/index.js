@@ -1,7 +1,7 @@
 import LogoImage from "../CardMedicals/logomedical.svg";
 import './style.css';
 
-function CardMedicals() {
+function CardMedicals(props) {
     return (
 
         <div className="cardMed" >
@@ -9,10 +9,10 @@ function CardMedicals() {
             <div className="posi">
                 <span className="titleCardMed">
                     Hello  <b className="titleCardMedBold">
-                        medico
+                        {props.name}
                     </b>
                 </span>
-                <span className="description">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.  </span>
+                <span className="description">Seja bem vindo(a) ao MedGestão sua plataforma de gerenciamento de atendimentos.  </span>
 
             </div>
             <div>

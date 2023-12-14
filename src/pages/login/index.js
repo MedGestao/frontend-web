@@ -14,10 +14,8 @@ function Login() {
   const [hasError, setHasError] = useState(false)
 
   const handleLogin = async (data) => {
-    console.log(data)
     try {
       var response = await BackendClient.post('/api/doctors/login', data)
-      console.log(response.data.message)
 
       localStorage.setItem("doctor_id", response.data.id);
 
@@ -44,9 +42,10 @@ function Login() {
               placeholder="exemplo@gmail.com"
               errors={errors}
               register={register}
-              validationSchema={{ 
+              validationSchema={{
                 required: true,
-                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  }}
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              }}
             />
 
             <Input

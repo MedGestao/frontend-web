@@ -30,7 +30,7 @@ function Signup() {
   useEffect(() => {
     if (watchZipCode.match(ZIP_CODE_PATTERN))
       getAddressByZipCode(watchZipCode)
-  }, [watchZipCode]); 
+  }, [watchZipCode]);
 
   const getAddressByZipCode = (zipCode) => {
     if (zipCode !== null) {
@@ -44,7 +44,7 @@ function Signup() {
             "uf": ""
           })
           setError('zipCode', { type: 'custom', message: 'CEP inválido' })
-          return 
+          return
         }
         clearErrors('zipCode')
         setAddress(response.data);
@@ -55,10 +55,10 @@ function Signup() {
   const handleSignup = async (data) => {    
 
     try {
-      await BackendClient.get('/api/validate-email', { 
+      await BackendClient.get('/api/validate-email', {
         params: {
           email: data.email
-        } 
+        }
       })
     }catch (exception) {
       setErrorMessage("O e-mail já está cadastrado")
@@ -104,9 +104,9 @@ function Signup() {
               placeholder="exemplo@gmail.com"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true,   
-                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
+              validationSchema={{
+                required: true,
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
               }}
             />
 
@@ -117,8 +117,8 @@ function Signup() {
               placeholder="999.999.999-99"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: /^\d{3}.\d{3}.\d{3}-\d{2}$/
               }}
             />
@@ -130,12 +130,12 @@ function Signup() {
               placeholder="57304-467"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: ZIP_CODE_PATTERN
               }}
             />
-            
+
             {address.logradouro !== '' && <div className="address-details">
               <p>{address.logradouro} - {address.bairro} - {address.localidade}/{address.uf} </p>
             </div>}
@@ -156,12 +156,12 @@ function Signup() {
               placeholder="09/09/2001"
               errors={errors}
               register={register}
-              validationSchema={{ 
+              validationSchema={{
                 required: true
               }}
             />
           </div>
-          
+
           <div className="second-column">
             <Select
               name="sex"
@@ -180,8 +180,8 @@ function Signup() {
               placeholder="(99) 99999-9999"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
+              validationSchema={{
+                required: true,
                 pattern: PHONE_PATTERN
               }}
             />
@@ -221,15 +221,16 @@ function Signup() {
               placeholder="********"
               errors={errors}
               register={register}
-              validationSchema={{ 
-                required: true, 
-                maxLength: 8, 
+              validationSchema={{
+                required: true,
+                maxLength: 8,
                 minLength: 8,
                 validate: (value) => {
-                if (watch('password') !== value) {
-                  return "As senhas que você escreveu não correspondem";
+                  if (watch('password') !== value) {
+                    return "As senhas que você escreveu não correspondem";
+                  }
                 }
-              }}}
+              }}
             />
 
             {errorMessage !== "" && (

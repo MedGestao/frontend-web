@@ -7,7 +7,7 @@ const SelectSpecialty = ({ label, name, register, validationSchema, errors, ...r
   const [specialties, setSpecialties] = useState([])
 
   useEffect(() => {
-    async function getSpecialties () {
+    async function getSpecialties() {
       try {
         var response = await BackendClient.get('/api/specialties')
         setSpecialties(response.data)
@@ -15,28 +15,28 @@ const SelectSpecialty = ({ label, name, register, validationSchema, errors, ...r
         console.log("Erro ao buscar especialidades")
       }
     }
-    
+
     getSpecialties()
   }, []);
 
   return (
     <div className="select-block">
       <label htmlFor={name}>{label}</label>
-      <select 
-        id={name} 
+      <select
+        id={name}
         name={name}
         defaultValue=""
-        className={`${errors[name] && "invalid-select"}`} 
+        className={`${errors[name] && "invalid-select"}`}
         {...register(name, validationSchema)}
         {...rest}>
-          <option value="" disabled>
-            Selecione uma opção
+        <option value="" disabled>
+          Selecione uma opção
+        </option>
+        {specialties.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.description}
           </option>
-          {specialties.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.description}
-            </option>
-          ))}
+        ))}
       </select>
       <span className={`${errors[name] && "invalid-field"}`}>
         {errors[name]?.message ? errors[name].message : 'Campo inválido'}
