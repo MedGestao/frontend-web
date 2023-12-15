@@ -52,7 +52,7 @@ function Signup() {
     }
   }
 
-  const handleSignup = async (data) => {
+  const handleSignup = async (data) => {    
 
     try {
       await BackendClient.get('/api/validate-email', {
@@ -60,13 +60,23 @@ function Signup() {
           email: data.email
         }
       })
-
-      setErrorMessage("")
-    } catch (exception) {
+    }catch (exception) {
       setErrorMessage("O e-mail já está cadastrado")
       return
     }
 
+    try {
+      await BackendClient.get('/api/validate-cpf', { 
+        params: {
+          cpf: data.cpf.replace(/\D/g, '')
+        } 
+      })
+    }catch (exception) {
+      setErrorMessage("O cpf já está cadastrado")
+      return
+    }
+
+    setErrorMessage("")
     navigate("/signup-second-step", {
       state: data
     })
