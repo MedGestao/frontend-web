@@ -208,7 +208,7 @@ function Dashboard() {
 
           : (
             <div>
-              <CardMedicals className="cardDoctor" name={doctor.user.name} />
+              <CardMedicals className="cardDoctor" name={doctor?.user?.name} />
               <div className="agendConsult" >
                 <div className="title">Consultas Agendadas</div>
                 <div className="ts" onMouseOver={showCalendar} onMouseOut={hideCalendar}>
