@@ -14,9 +14,13 @@ function CardSevice({ appointment, name,
     date_of_consult, openModal, ...props }) {
 
 
+    let dataObj = new Date(date_of_birth);
+    let dataObj2 = new Date(date_of_consult)
+    let date_of_birth_f = dataObj.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    let date_of_birth_c = dataObj2.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
     const startAttendance = () => {
 
-        openModal();
+        openModal(appointment);
     };
 
     return (
@@ -28,7 +32,7 @@ function CardSevice({ appointment, name,
                         <span>{name}</span>
                     </div>
                     <div className='dateInformation'>
-                        <span>{date_of_birth} - {age} anos</span>
+                        <span>{date_of_birth_f} - {age} anos</span>
                     </div>
                 </div>
             </div>
@@ -36,7 +40,7 @@ function CardSevice({ appointment, name,
             <div className="cadServiceMed2">
                 <div className="agend">
                     <div className='dateInformation'>
-                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>{date_of_consult}</span>
+                        <img src={calendarIcon} style={{ marginRight: '10px' }} /> <span>{date_of_birth_c}</span>
 
                     </div>
                     <div className="dateInformation">

@@ -2,8 +2,18 @@ import './style.css';
 import FollowUp from './components/FollowUp';
 import PatientsConsult from './components/PatientsConsults';
 
-function LatestConsultations() {
-    const consultations = [{ title: 'Pacientes Atendidos', total: 1, type: 'people' }, { title: 'Pacientes em espera', total: 1, type: 'hold' }, { title: 'Total de consultas para Hoje', total: 1, type: 'consult' }]
+function LatestConsultations(consultsToday) {
+
+    let consultations = [
+        {
+            title: 'Pacientes Atendidos', total: (consultsToday.consultsToday?.total - consultsToday.consultsToday?.consultsOpen), type: 'people'
+        },
+        {
+            title: 'Pacientes em espera', total: consultsToday.consultsToday?.consultsOpen, type: 'hold'
+        },
+        {
+            title: 'Total de consultas para Hoje', total: consultsToday.consultsToday?.total, type: 'consult'
+        }]
     const oldConsults = [{ name: "maria", img: "" }, { name: "jose", img: "" }]
     return (
         <div className="LatestConsultations"  >

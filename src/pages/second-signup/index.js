@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect, useCallback } from "react"
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import axios from "axios"
-
 import { BackendClient } from '../../service/client'
 import Input from '../../components/Input'
 import SimpleInput from '../../components/SimpleInput'
@@ -57,7 +56,7 @@ function SecondSignup() {
   }
 
   const DaysOfWeek = {
-    Domingo: 1 ,
+    Domingo: 1,
     Segunda: 2,
     Terça: 3,
     Quarta: 4,
@@ -110,7 +109,7 @@ function SecondSignup() {
         setErrorMessage(exception.response.data.message)
         console.log(exception.response.data.message)
         return
-      } 
+      }
     }
 
     try {
@@ -133,7 +132,7 @@ function SecondSignup() {
         })
       );
 
-      var response = await BackendClient.post('/api/doctors/schedule', scheduleRequest)   
+      var response = await BackendClient.post('/api/doctors/schedule', scheduleRequest)
       console.log(response.data)
       setErrorMessage("")
       reset()
@@ -141,7 +140,7 @@ function SecondSignup() {
     } catch (exception) {
       setErrorMessage("Erro ao salvar agenda")
       return
-    } 
+    }
   }
 
   const getOnlyValidPeriods = () => {
@@ -179,11 +178,11 @@ function SecondSignup() {
 
   const isDaySelected = (day) => {
     return selectedDays.indexOf(day) > -1
-  } 
+  }
 
   const isSelectedPeriod = (day, period) => {
     return selectedPeriods[day]?.length > 0 && selectedPeriods[day].indexOf(period) > -1
-  } 
+  }
 
   const handleSelectedPeriods = (day, period) => {
     if (selectedPeriods[day]) {
@@ -193,13 +192,13 @@ function SecondSignup() {
         // Se periodo já estiver selecionado, remove
         const updatedValues = selectedPeriods[day].filter(value => value !== period)
 
-        setSelectedPeriods(prev => ({...prev, [day]: updatedValues}))
+        setSelectedPeriods(prev => ({ ...prev, [day]: updatedValues }))
       } else {
         // se periodo não estiver selecionado, adiciona
-        setSelectedPeriods(prev => ({...prev, [day]: [...prev[day], period]}))
+        setSelectedPeriods(prev => ({ ...prev, [day]: [...prev[day], period] }))
       }
     } else {
-      setSelectedPeriods(prev => ({...prev, [day]: [period]}))
+      setSelectedPeriods(prev => ({ ...prev, [day]: [period] }))
     }
   }
 
@@ -214,35 +213,35 @@ function SecondSignup() {
               <h3>Selecione seus dias de atendimento</h3>
               <div className="select-days-of-week">
                 {DAYS_OF_WEEK.map((day, index) => (
-                  <DayButton 
-                    key={index} 
-                    day={day} 
-                    isDaySelected={isDaySelected} 
-                    handleSelectedDays={handleSelectedDays} 
+                  <DayButton
+                    key={index}
+                    day={day}
+                    isDaySelected={isDaySelected}
+                    handleSelectedDays={handleSelectedDays}
                   />
                 ))}
               </div>
             </div>
 
             {selectedDays.length > 0 && <div className="periods">
-                <h3>Selecione os horários para cada dia</h3>
-                
-                {selectedDays.map((day, index) => (
-                  <div>
-                    <strong className='day-title'>{day}</strong>
-                    <div className="select-periods-of-day">
-                      {PERIODS.map(time => 
-                        <TimeButton 
-                          key={time} 
-                          period={time} 
-                          day={day}
-                          isSelected={isSelectedPeriod}
-                          handleSelected={handleSelectedPeriods}
-                        />
-                      )}
-                    </div>
+              <h3>Selecione os horários para cada dia</h3>
+
+              {selectedDays.map((day, index) => (
+                <div>
+                  <strong className='day-title'>{day}</strong>
+                  <div className="select-periods-of-day">
+                    {PERIODS.map(time =>
+                      <TimeButton
+                        key={time}
+                        period={time}
+                        day={day}
+                        isSelected={isSelectedPeriod}
+                        handleSelected={handleSelectedPeriods}
+                      />
+                    )}
                   </div>
-                ))}
+                </div>
+              ))}
             </div>}
 
             <Input
@@ -284,11 +283,11 @@ function SecondSignup() {
                 accept=".png, .jpeg, .jpg"
                 onChange={handleUploadAvatar}
               />
-              <label 
-                className="avatar-image upload-label" 
-                htmlFor="file" 
+              <label
+                className="avatar-image upload-label"
+                htmlFor="file"
                 style={{ backgroundImage: `url(${preview})` }}>
-                  <span>Selecionar foto</span>
+                <span>Selecionar foto</span>
               </label>
             </div>
 
